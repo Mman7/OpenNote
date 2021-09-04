@@ -1,0 +1,494 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@600&family=Oswald&display=swap");
+:root {
+  --title-font: "Oswald", sans-serif;
+  --content-font: "Open Sans", sans-serif;
+}
+
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+}
+
+body {
+  overflow: hidden;
+  position: relative;
+  font-size: 62.5%;
+  background: rgb(17, 44, 69);
+  background: linear-gradient(
+    120deg,
+    rgba(17, 44, 69, 1) 0%,
+    rgba(73, 139, 201, 1) 100%
+  );
+}
+::-webkit-scrollbar {
+  display: none;
+}
+.App {
+  height: 100vh;
+  background: linear-gradient(180deg, #071136 0%, rgba(7, 17, 54, 0) 100%);
+}
+.HideApp {
+  display: none;
+}
+.Sidebar {
+  position: absolute;
+  background: #02203d7c;
+  backdrop-filter: blur(10px);
+  border-radius: 10px;
+  width: 30vw;
+  display: flex;
+  flex-direction: column;
+  margin: -80px;
+  margin-top: 0px;
+  height: 90vh;
+  z-index: 5;
+  left: -100%;
+  animation: SideSlideOut 1s;
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+
+.Sidebar button:last-child {
+  background: red;
+  position: absolute;
+  bottom: 0px;
+  border: none;
+}
+.Sidebar button:last-child:hover {
+  transform: translateY(0px);
+  border: none;
+}
+@keyframes SideSlideOut {
+  from {
+    left: 0%;
+    opacity: 1;
+  }
+  to {
+    left: -100%;
+    opacity: 1;
+  }
+}
+.SideBarDisplay {
+  left: 0%;
+  opacity: 1;
+  animation: SideSlideIn 0.5s ease;
+}
+
+@keyframes SideSlideIn {
+  from {
+    left: -100%;
+  }
+  to {
+    left: 0%;
+  }
+}
+.Sidebar button {
+  font-size: 30px;
+  font-weight: bold;
+  color: white;
+  background: transparent;
+  font-family: sans-serif;
+  width: 100%;
+  border: 5px solid transparent;
+  transition: all 0.3s ease;
+  margin: 5px;
+  padding: 1rem;
+  outline: none;
+  cursor: pointer;
+}
+.Sidebar button:hover {
+  transform: translateY(-23px);
+  border-right: 5px solid white;
+  border-left: 5px solid white;
+}
+.Sidebar button:first-child {
+  font-family: sans-serif;
+  border: 0px solid transparent;
+  transition: all 0.3s ease;
+  padding: 0px;
+  margin: 0px;
+  outline: none;
+  cursor: pointer;
+}
+.Sidebar button:first-child img {
+  border-radius: 10px;
+  width: 6rem;
+}
+.Sidebar button:first-child:hover {
+  transform: translateY(0px);
+  border-right: 0px solid white;
+  border-left: 0px solid white;
+}
+
+.Navbar {
+  width: 100%;
+  background: black;
+  padding: 10px;
+  -webkit-box-shadow: 0px 9px 15px 8px rgba(0, 0, 0, 0.51);
+  box-shadow: 0px 9px 15px 8px rgba(0, 0, 0, 0.51);
+  display: flex;
+  justify-content: space-between;
+}
+
+.Navbar button {
+  font-size: 2.5rem;
+  background: transparent;
+  outline: none;
+  border: none;
+  border-radius: 10px;
+  color: white;
+  padding: 0.2em;
+  transform: scaleY(0.9);
+  transition: all 0.25s ease;
+  cursor: pointer;
+}
+.Navbar button:hover {
+  background: rgba(255, 255, 255, 0.356);
+}
+.Container {
+  width: 100;
+  display: grid;
+  grid-auto-columns: 1fr;
+  grid-template-columns: 100% 0%;
+  grid-template-rows: 0.1fr 1.9fr;
+  gap: 0% 0%;
+  grid-template-areas:
+    "Searchbar Preview-container"
+    "NoteList Preview-container";
+  width: 100%;
+  height: 100%;
+}
+.Preview-container {
+  display: none;
+  grid-area: Preview-container;
+  background: lightgreen;
+  padding: 1em;
+}
+.Searchbar {
+  background: lightpink;
+  grid-area: Searchbar;
+  display: flex;
+  align-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  padding: 1em;
+  input {
+    font-size: 1.5rem;
+    padding: 0.25em 0.5em;
+    outline: none;
+    width: 30%;
+    transition: all 0.35s ease;
+    &:focus {
+      width: 40%;
+    }
+  }
+  button,
+  svg {
+    font-size: 2rem;
+    background: none;
+    outline: none;
+    border: none;
+    color: white;
+    margin: 0 0.5em;
+  }
+  button {
+    margin: 0 0.1em;
+    cursor: pointer;
+    padding-top: 0.1em;
+    svg:hover {
+      color: #066bc9;
+    }
+  }
+}
+.NoteList {
+  grid-area: NoteList;
+  background: lightgoldenrodyellow;
+  width: 100%;
+}
+.Noteitem {
+  padding: 1.5em;
+  margin: 2em;
+  background: #066bc9;
+  border-radius: 10px;
+  cursor: pointer;
+  display: flex;
+  transition: all 0.3s ease;
+  h1,
+  h2 {
+    font-family: sans-serif;
+    color: white;
+    font-size: 3em;
+  }
+  h2 {
+    font-size: 2em;
+  }
+  p {
+    max-height: 50px;
+    overflow: hidden;
+    color: white;
+    font-size: 1rem;
+  }
+  &:hover {
+    background: #097eeb;
+  }
+}
+
+.Noteitem div {
+  flex: 2;
+}
+.Noteitem h2 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+}
+.View {
+  transition: all 1s ease;
+  position: fixed;
+  z-index: 200;
+  top: 50%;
+  right: 50%;
+  transform: translate(150%, -46%);
+  background: lightgrey;
+  display: grid;
+  grid-auto-columns: 1fr;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 0.1fr 2.9fr;
+  gap: 0% 0%;
+  grid-template-areas:
+    "ViewNavBar ViewNavBar"
+    "Edit-Section Edit-Section";
+  height: 110vh;
+  width: 100%;
+}
+.slideshow {
+  right: 150%;
+}
+.ViewNavBar {
+  background: peru;
+  grid-area: ViewNavBar;
+}
+.Edit-Section {
+  background: lightyellow;
+  grid-area: Edit-Section;
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+.Edit-tool {
+  background: lightskyblue;
+  display: flex;
+  flex-direction: column;
+  flex: 0.1;
+  button {
+    border: none;
+    outline: none;
+    background: lightseagreen;
+    margin: 0.5em;
+    font-size: 2rem;
+    padding: 0.5em;
+  }
+}
+.Edit-NoteView {
+  flex: 1.1;
+  display: grid;
+  grid-auto-columns: 1fr;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 10% auto;
+  gap: 0% 0%;
+  grid-template-areas:
+    "Edit-title Edit-Date"
+    "Edit-Note-Section Edit-Note-Section";
+  width: 100%;
+  height: 100%;
+  textarea {
+    outline: none;
+  }
+  .Edit-title,
+  .Edit-Date {
+    display: inline-block;
+    vertical-align: middle;
+    outline: none;
+    font-size: 2rem;
+    padding: 0 0.5em;
+  }
+  .Edit-title {
+    grid-area: Edit-title;
+    background: lightcoral;
+  }
+  .Edit-Date {
+    grid-area: Edit-Date;
+    background: lightseagreen;
+  }
+  .Edit-Note-Section {
+    grid-area: Edit-Note-Section;
+    background: mediumspringgreen;
+    padding: 1em;
+    font-size: 1.5rem;
+  }
+}
+.ViewNavBar button {
+  background: transparent;
+  border: none;
+  margin: 1rem;
+  font-size: 2.5rem;
+  color: white;
+  border-radius: 10px;
+  outline: none;
+  cursor: pointer;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+}
+.ViewNavBar button:hover {
+  background: rgba(255, 255, 255, 0.404);
+}
+
+.Landing-Page {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  background: white;
+  background: rgb(0, 0, 0);
+  background: rgb(0, 0, 0);
+  background: linear-gradient(
+    120deg,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(7, 127, 240, 1) 100%
+  );
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  height: 100vh;
+  width: 100vw;
+  z-index: 10;
+}
+.Login {
+  display: grid;
+  grid-auto-columns: 1fr;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;
+  gap: 0px 0px;
+  grid-template-areas: ". .";
+  border: none;
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  transition: all 1s ease;
+  opacity: 1;
+}
+.isLogin {
+  opacity: 0;
+  pointer-events: none;
+  user-select: none;
+  display: none;
+}
+.Landing-Page section {
+  font-size: 3rem;
+  background: white;
+  width: 30vw;
+  height: 400px;
+  padding: 0.5em;
+  border-radius: 10px;
+}
+.image {
+  position: relative;
+}
+.image img {
+  user-select: none;
+  pointer-events: none;
+  -webkit-user-drag: none;
+  -moz-user-select: none;
+  width: 100%;
+  height: 100%;
+  border: none;
+  border-radius: 10px;
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+  aspect-ratio: 4/3;
+}
+.image p {
+  color: white;
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  backdrop-filter: blur(7px);
+  background: #5e5e5e5e;
+  transform: translate(-50%, -50%);
+  font-size: 3rem;
+  font-family: var(--title-font);
+  border: 5px solid white;
+  padding: 0.3em;
+  width: 40%;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+.Landing-Page form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: white;
+  border: none;
+  border-radius: 10px;
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+  padding: 5em;
+}
+.Landing-Page form input {
+  font-size: 1rem;
+  border-radius: 5px;
+  border: 3px solid transparent;
+  outline: none;
+  transform: translateX(10px);
+  width: 90%;
+  margin: 0.5rem;
+  transition: all 0.3s ease;
+  background: lightgrey;
+  padding: 1em;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+.Landing-Page form input:focus {
+  border-bottom: 3px solid black;
+}
+
+.Landing-Page form input:hover {
+  border-bottom: 3px solid black;
+}
+.Provider-SignIn {
+  font-size: 1.5rem;
+  font-family: var(--title-font);
+}
+.Provider-SignIn button {
+  background: transparent;
+  margin: 0.5em;
+  color: black;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  font-size: 1em;
+  transition: all 0.3s ease;
+}
+.Provider-SignIn button:hover {
+  color: rgba(7, 127, 240, 1);
+}
+
+@media (min-width: 750px) {
+  .image {
+    display: none;
+  }
+  .Landing-Page form {
+    width: 90vw;
+    border-radius: 10px;
+  }
+  .Login {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .Preview-container {
+    display: block;
+  }
+  .Container {
+    grid-template-columns: 60% 40%;
+  }
+}
