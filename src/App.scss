@@ -1,9 +1,14 @@
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@600&family=Oswald&display=swap");
+
 :root {
   --title-font: "Oswald", sans-serif;
   --content-font: "Open Sans", sans-serif;
 }
-
+@mixin prestyle-btn($borderinput: none, $backgroundClr: transparent) {
+  border: $borderinput;
+  background: $backgroundClr;
+  outline: none;
+}
 * {
   margin: 0px;
   padding: 0px;
@@ -32,96 +37,57 @@ body {
   display: none;
 }
 .Sidebar {
-  position: absolute;
-  background: #02203d7c;
-  backdrop-filter: blur(10px);
-  border-radius: 10px;
-  width: 30vw;
+  padding: 1em;
+  width: 60%;
+  max-width: 15rem;
+  left: -150%;
+  height: 92%;
+  position: fixed;
+  background: lightsteelblue;
   display: flex;
   flex-direction: column;
-  margin: -80px;
-  margin-top: 0px;
-  height: 90vh;
-  z-index: 5;
-  left: -100%;
-  animation: SideSlideOut 1s;
-  opacity: 0;
-  transition: opacity 0.5s;
+  transition: all ease 0.5s;
+  .User-Info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: seagreen;
+    padding: 1em;
+    a {
+      img {
+        border-radius: 50%;
+        margin: 1.5em;
+      }
+    }
+    h1 {
+      margin: 0.25em;
+      font-size: clamp(0.5rem, calc(0.5rem + 1.5vw), 1rem);
+    }
+  }
+  button {
+    @include prestyle-btn(5px solid transparent, none);
+    margin: 1em;
+    font-size: clamp(1.5rem, calc(0.5rem + 2vw), 1.7rem);
+    padding: 0 1em;
+    transition: all ease 0.35s;
+    &:hover {
+      border-left: 5px solid blue;
+    }
+  }
+  .hey {
+    margin-top: auto;
+  }
+  button:last-child {
+    margin-top: auto;
+  }
 }
 
-.Sidebar button:last-child {
-  background: red;
-  position: absolute;
-  bottom: 0px;
-  border: none;
-}
-.Sidebar button:last-child:hover {
-  transform: translateY(0px);
-  border: none;
-}
-@keyframes SideSlideOut {
-  from {
-    left: 0%;
-    opacity: 1;
-  }
-  to {
-    left: -100%;
-    opacity: 1;
-  }
-}
 .SideBarDisplay {
-  left: 0%;
-  opacity: 1;
-  animation: SideSlideIn 0.5s ease;
-}
-
-@keyframes SideSlideIn {
-  from {
-    left: -100%;
-  }
-  to {
-    left: 0%;
-  }
-}
-.Sidebar button {
-  font-size: 30px;
-  font-weight: bold;
-  color: white;
-  background: transparent;
-  font-family: sans-serif;
-  width: 100%;
-  border: 5px solid transparent;
-  transition: all 0.3s ease;
-  margin: 5px;
-  padding: 1rem;
-  outline: none;
-  cursor: pointer;
-}
-.Sidebar button:hover {
-  transform: translateY(-23px);
-  border-right: 5px solid white;
-  border-left: 5px solid white;
-}
-.Sidebar button:first-child {
-  font-family: sans-serif;
-  border: 0px solid transparent;
-  transition: all 0.3s ease;
-  padding: 0px;
-  margin: 0px;
-  outline: none;
-  cursor: pointer;
-}
-.Sidebar button:first-child img {
-  border-radius: 10px;
-  width: 6rem;
-}
-.Sidebar button:first-child:hover {
-  transform: translateY(0px);
-  border-right: 0px solid white;
-  border-left: 0px solid white;
+  left: 0;
 }
 
 .Navbar {
+  z-index: 100;
   width: 100%;
   background: black;
   padding: 10px;
@@ -129,28 +95,28 @@ body {
   box-shadow: 0px 9px 15px 8px rgba(0, 0, 0, 0.51);
   display: flex;
   justify-content: space-between;
+  button {
+    font-size: 2.5rem;
+    background: transparent;
+    outline: none;
+    border: none;
+    border-radius: 10px;
+    color: white;
+    padding: 0.2em;
+    transform: scaleY(0.9);
+    transition: all 0.25s ease;
+    cursor: pointer;
+    &:hover {
+      background: rgba(255, 255, 255, 0.356);
+    }
+  }
 }
 
-.Navbar button {
-  font-size: 2.5rem;
-  background: transparent;
-  outline: none;
-  border: none;
-  border-radius: 10px;
-  color: white;
-  padding: 0.2em;
-  transform: scaleY(0.9);
-  transition: all 0.25s ease;
-  cursor: pointer;
-}
-.Navbar button:hover {
-  background: rgba(255, 255, 255, 0.356);
-}
 .Container {
   width: 100;
   display: grid;
   grid-auto-columns: 1fr;
-  grid-template-columns: 100% 0%;
+  grid-template-columns: 100% 0fr;
   grid-template-rows: 0.1fr 1.9fr;
   gap: 0% 0%;
   grid-template-areas:
@@ -178,10 +144,10 @@ body {
     font-size: 1.5rem;
     padding: 0.25em 0.5em;
     outline: none;
-    width: 30%;
+    width: clamp(30%, 50%, 50%);
     transition: all 0.35s ease;
     &:focus {
-      width: 40%;
+      width: 65%;
     }
   }
   button,
@@ -208,7 +174,7 @@ body {
   width: 100%;
 }
 .Noteitem {
-  padding: 1.5em;
+  padding: 2em;
   margin: 2em;
   background: #066bc9;
   border-radius: 10px;
@@ -245,23 +211,42 @@ body {
   flex: 1;
 }
 .View {
+  width: 100%;
+  height: 100vh;
   transition: all 1s ease;
   position: fixed;
   z-index: 200;
   top: 50%;
   right: 50%;
-  transform: translate(150%, -46%);
+  transform: translate(150%, -50%);
   background: lightgrey;
   display: grid;
   grid-auto-columns: 1fr;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: 0.1fr 2.9fr;
+  grid-template-rows: 1fr 10fr;
   gap: 0% 0%;
   grid-template-areas:
     "ViewNavBar ViewNavBar"
     "Edit-Section Edit-Section";
-  height: 110vh;
-  width: 100%;
+
+  .Edit-Section {
+    background: lightyellow;
+    grid-area: Edit-Section;
+  }
+  .Edit-tool {
+    //TODO Edit Tool change it to fixed when ((Edit mode ))
+    background: lightskyblue;
+    position: fixed;
+    bottom: 0%;
+    width: 100%;
+    button {
+      border: none;
+      outline: none;
+      background: lightseagreen;
+      padding: 1em;
+      margin: 1em;
+    }
+  }
 }
 .slideshow {
   right: 150%;
@@ -270,49 +255,32 @@ body {
   background: peru;
   grid-area: ViewNavBar;
 }
-.Edit-Section {
-  background: lightyellow;
-  grid-area: Edit-Section;
-  width: 100%;
-  height: 100%;
-  display: flex;
-}
-.Edit-tool {
-  background: lightskyblue;
-  display: flex;
-  flex-direction: column;
-  flex: 0.1;
-  button {
-    border: none;
-    outline: none;
-    background: lightseagreen;
-    margin: 0.5em;
-    font-size: 2rem;
-    padding: 0.5em;
-  }
-}
+
 .Edit-NoteView {
-  flex: 1.1;
+  grid-area: Edit-NoteView;
   display: grid;
   grid-auto-columns: 1fr;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 0.5fr 0.5fr;
   grid-template-rows: 10% auto;
   gap: 0% 0%;
   grid-template-areas:
     "Edit-title Edit-Date"
     "Edit-Note-Section Edit-Note-Section";
-  width: 100%;
   height: 100%;
+
   textarea {
+    outline: none;
+  }
+  input {
+    width: 100%;
+    border: none;
     outline: none;
   }
   .Edit-title,
   .Edit-Date {
-    display: inline-block;
-    vertical-align: middle;
     outline: none;
-    font-size: 2rem;
-    padding: 0 0.5em;
+    font-size: calc(1rem + 1vw);
+    padding: 0 calc(0.5em + 1vw);
   }
   .Edit-title {
     grid-area: Edit-title;
@@ -349,146 +317,107 @@ body {
   position: absolute;
   display: grid;
   place-items: center;
-  background: white;
-  background: rgb(0, 0, 0);
-  background: rgb(0, 0, 0);
   background: linear-gradient(
     120deg,
-    rgba(0, 0, 0, 1) 0%,
-    rgba(7, 127, 240, 1) 100%
+    hsl(0, 0%, 0%) 0%,
+    hsl(209, 94%, 48%) 100%
   );
   background-repeat: no-repeat;
   background-size: cover;
-
   height: 100vh;
   width: 100vw;
   z-index: 10;
 }
 .Login {
-  display: grid;
-  grid-auto-columns: 1fr;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr;
-  gap: 0px 0px;
-  grid-template-areas: ". .";
-  border: none;
-  border-radius: 10px;
-  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-  transition: all 1s ease;
-  opacity: 1;
-}
-.isLogin {
-  opacity: 0;
-  pointer-events: none;
-  user-select: none;
-  display: none;
-}
-.Landing-Page section {
-  font-size: 3rem;
-  background: white;
-  width: 30vw;
-  height: 400px;
-  padding: 0.5em;
-  border-radius: 10px;
-}
-.image {
-  position: relative;
-}
-.image img {
-  user-select: none;
-  pointer-events: none;
-  -webkit-user-drag: none;
-  -moz-user-select: none;
-  width: 100%;
-  height: 100%;
-  border: none;
-  border-radius: 10px;
-  border-top-right-radius: 0px;
-  border-bottom-right-radius: 0px;
-  aspect-ratio: 4/3;
-}
-.image p {
-  color: white;
-  position: absolute;
-  top: 30%;
-  left: 50%;
-  backdrop-filter: blur(7px);
-  background: #5e5e5e5e;
-  transform: translate(-50%, -50%);
-  font-size: 3rem;
-  font-family: var(--title-font);
-  border: 5px solid white;
-  padding: 0.3em;
-  width: 40%;
-  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-}
-.Landing-Page form {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  width: 75%;
   background: white;
-  border: none;
-  border-radius: 10px;
-  border-top-left-radius: 0px;
-  border-bottom-left-radius: 0px;
-  padding: 5em;
-}
-.Landing-Page form input {
-  font-size: 1rem;
-  border-radius: 5px;
-  border: 3px solid transparent;
-  outline: none;
-  transform: translateX(10px);
-  width: 90%;
-  margin: 0.5rem;
-  transition: all 0.3s ease;
-  background: lightgrey;
-  padding: 1em;
-  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-}
-.Landing-Page form input:focus {
-  border-bottom: 3px solid black;
-}
+  .image {
+    display: none;
+    background: rgb(0, 0, 0);
+    background: linear-gradient(
+        120deg,
+        rgba(0, 0, 0, 0.5) 0%,
+        rgba(0, 0, 0, 0.5) 100%
+      ),
+      url("./Image_Source/Note.jpg");
 
-.Landing-Page form input:hover {
-  border-bottom: 3px solid black;
-}
-.Provider-SignIn {
-  font-size: 1.5rem;
-  font-family: var(--title-font);
-}
-.Provider-SignIn button {
-  background: transparent;
-  margin: 0.5em;
-  color: black;
-  border: none;
-  outline: none;
-  cursor: pointer;
-  font-size: 1em;
-  transition: all 0.3s ease;
-}
-.Provider-SignIn button:hover {
-  color: rgba(7, 127, 240, 1);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100%;
+    height: 50vh;
+    padding: 3em;
+    justify-content: center;
+    p {
+      color: white;
+      font-weight: 600;
+      font-size: 3rem;
+    }
+  }
+  form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 2em;
+    input {
+      border: none;
+      margin: 0.5em 0;
+      border-radius: 10px;
+      outline: none;
+      padding: 1em;
+      box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+      transition: all 0.35s ease;
+      &:hover {
+        box-shadow: rgba(0, 36, 102, 0.55) 0px 5px 15px;
+      }
+    }
+    .Provider-SignIn {
+      padding: 1em;
+      margin-top: 2em;
+      display: flex;
+      align-items: center;
+      fieldset {
+        border: none;
+        border-top: 2px solid gray;
+        width: 100%;
+        legend {
+          transform: translateY(-5px);
+          font-size: 2rem;
+          margin-left: auto;
+          margin-right: auto;
+          padding: 1em;
+        }
+      }
+      h1 {
+        font-size: 2rem;
+      }
+      button {
+        margin: 0 0.5em;
+        transform: translateY(5px);
+        @include prestyle-btn(none, none);
+        font-size: 2rem;
+        &:hover {
+          color: blue;
+        }
+      }
+    }
+  }
 }
 
 @media (min-width: 750px) {
-  .image {
-    display: none;
-  }
-  .Landing-Page form {
-    width: 90vw;
-    border-radius: 10px;
-  }
-  .Login {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  .Preview-container {
-    display: block;
-  }
   .Container {
-    grid-template-columns: 60% 40%;
+    //Mobile First
+    grid-template-columns: 50% 50%;
+    .Preview-container {
+      display: grid;
+    }
+  }
+  .Landing-Page {
+    .Login {
+      .image {
+        display: flex;
+      }
+    }
   }
 }
