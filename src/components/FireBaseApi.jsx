@@ -1,6 +1,5 @@
 import firebase from "firebase/compat/app";
 
-import "firebase/compat/analytics";
 import "firebase/compat/auth";
 import "firebase/compat/firestore";
 
@@ -30,31 +29,22 @@ firebase.auth().useDeviceLanguage();
 
 //GoogleSignIn
 export function GoogleSignIn(callback) {
-  firebase.auth().onAuthStateChanged((user) => {
-    if (user) {
-      console.log("user already googelprovider sign in");
-    } else {
-      console.log("user suck dick not sign in");
-      firebase
-        .auth()
-        .signInWithRedirect(googleProvider)
-        .then((user) => {
-          callback(true);
-          console.log(user);
-        });
-    }
-  });
+  firebase
+    .auth()
+    .signInWithRedirect(googleProvider)
+    .then((user) => {
+      callback(true);
+      console.log(user);
+    });
 }
 
 export const getCurrentUser = () => {
-  const user = firebase.auth().currentUser;
-  if (user !== null) {
+  const currentUser = firebase.auth().currentUser;
+  if (currentUser !== null) {
     // The user's ID, unique to the Firebase project. Do NOT use
     // this value to authenticate with your backend server, if
     // you have one. Use User.getToken() instead.
-    const uid = user.uid;
-
-    return user;
+    return currentUser;
   }
 };
 
@@ -81,4 +71,32 @@ export function isSignInChecker(callback) {
       console.log("user not login");
     }
   });
+}
+
+const db = firebase.firestore();
+
+export function SaveNote_To_DataBase(note) {
+  db.collection("users")
+    .add({
+      userId: getCurrentUser().uid,
+      first: "Ada",
+      last: "Lovelace",
+      born: 1815,
+    })
+    .then((docRef) => {
+      console.log("Document written with ID: ", docRef.id);
+    })
+    .catch((error) => {
+      console.error("Error adding document: ", error);
+    });
+}
+
+export function getData_From_DataBase() {
+  db.collection("users")
+    .get()
+    .then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        console.log(`${doc.id} => ${doc.data()}`);
+      });
+    });
 }
