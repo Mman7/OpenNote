@@ -76,27 +76,38 @@ export function isSignInChecker(callback) {
 const db = firebase.firestore();
 
 export function SaveNote_To_DataBase(note) {
-  db.collection("users")
-    .add({
-      userId: getCurrentUser().uid,
-      first: "Ada",
-      last: "Lovelace",
-      born: 1815,
-    })
-    .then((docRef) => {
-      console.log("Document written with ID: ", docRef.id);
-    })
-    .catch((error) => {
-      console.error("Error adding document: ", error);
-    });
+  console.log(note);
+  firebase.auth().onAuthStateChanged((user) => {
+    if (user === undefined || null) return;
+    const { email, userId } = note;
+    if (email || userId === undefined || null) return;
+    db.collection("users")
+      .doc(note.title)
+      .set({
+        email: note.email,
+        userId: note.userId,
+        title: note.title || "New Document",
+        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+        paragraph: note.paragraph ?? "Insert some text",
+      })
+      .then(() => {
+        console.log("Document successfully written!");
+      })
+      .catch((error) => {
+        console.error("Error writing document: ", error);
+      });
+  });
 }
+
+//TODO : Fix Firebase security rules
+//* ONLY USER ITSELF CAN READS THE DATA
 
 export function getData_From_DataBase() {
   db.collection("users")
     .get()
     .then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
-        console.log(`${doc.id} => ${doc.data()}`);
+        console.log(`${doc.data()}`);
       });
     });
 }
