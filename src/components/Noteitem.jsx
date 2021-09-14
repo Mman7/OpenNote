@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { ShowEditContext } from "./OpenNote";
 
-export default function Noteitem() {
+export default function Noteitem({ note }) {
   const [, setShowEdit] = useContext(ShowEditContext);
 
   const EditNoteHandle = () => {
@@ -10,21 +10,11 @@ export default function Noteitem() {
 
   return (
     <div onClick={EditNoteHandle} title="Click to edit" className="Noteitem">
-      <div>
-        <h1>hello</h1>
-        <p>
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Minima
-          distinctio consequatur culpa! Autem iusto reiciendis dignissimos
-          voluptas! Molestiae, consequatur enim. Lorem ipsum dolor sit, amet
-          consectetur adipisicing elit. Atque culpa pariatur vero, magni error
-          quia possimus deserunt, minima nemo voluptatum, quos nihil veritatis
-          dicta quasi impedit fugit. Vitae, dolor optio. Lorem ipsum dolor sit
-          amet consectetur adipisicing elit. Ipsam ea neque voluptatum quas ut
-          et quaerat enim, fugit architecto magnam perspiciatis mollitia illo
-          odio impedit, ad reprehenderit consectetur, eum doloribus?
-        </p>
+      <div className="Noteitem-Container">
+        <h1 className="Noteitem-title">{note.title}</h1>
+        <h2 className="Noteitem-time">Date:040427</h2>
+        <p className="Noteitem-paragraph">{note.paragraph}</p>
       </div>
-      <h2>Date:040427</h2>
     </div>
   );
 }
