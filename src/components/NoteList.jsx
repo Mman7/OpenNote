@@ -1,11 +1,14 @@
-import React from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { NoteContext } from "./NoteListContextProvider";
 import Noteitem from "./Noteitem";
 
 export default function NoteList() {
+  const [Notes, setNotes] = useContext(NoteContext);
   return (
     <div className="NoteList">
-      <Noteitem />
-      <Noteitem />
+      {Notes.map((note) => (
+        <Noteitem key={note.title} note={note} />
+      ))}
     </div>
   );
 }
