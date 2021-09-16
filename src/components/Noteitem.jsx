@@ -1,20 +1,34 @@
 import React, { useContext } from "react";
 import { ShowEditContext } from "./OpenNote";
+import { EditNoteContext } from "./EditNoteContextProvider";
+import { NoteContext } from "./NoteListContextProvider";
+import { NormalizeTime } from "./NormalizeTime";
 
 export default function Noteitem({ note }) {
-  const [, setShowEdit] = useContext(ShowEditContext);
+  const [ShowEdit, setShowEdit] = useContext(ShowEditContext);
+  const [Notes, setNotes] = useContext(NoteContext);
+  const [CurrentEditNote, setCurrentEditNote] = useContext(EditNoteContext);
 
   const EditNoteHandle = () => {
     setShowEdit((prev) => !prev);
   };
 
+  const EditThisNote = (e) => {
+    const EditNoteTitel = e.target.firstChild.innerText;
+    setCurrentEditNote(EditNoteTitel);
+    EditNoteHandle();
+  };
   return (
-    <div onClick={EditNoteHandle} title="Click to edit" className="Noteitem">
-      <div className="Noteitem-Container">
-        <h1 className="Noteitem-title">{note.title}</h1>
-        <h2 className="Noteitem-time">Date:040427</h2>
-        <p className="Noteitem-paragraph">{note.paragraph}</p>
-      </div>
+    <div
+      onClick={(e) => EditThisNote(e)}
+      title="Click to edit"
+      className="Noteitem"
+    >
+      <h1 className="Noteitem-title">{note.title}</h1>
+      <h2 className="Noteitem-time">
+        Lastest Update: {NormalizeTime(note.createdAt)}
+      </h2>
+      <p className="Noteitem-paragraph">{note.paragraph}</p>
     </div>
   );
 }
