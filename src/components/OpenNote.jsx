@@ -1,5 +1,6 @@
 import React, { useState, createContext, useContext } from "react";
 import { NoteListContextProvider } from "./NoteListContextProvider";
+import { EditNoteContextProvider } from "./EditNoteContextProvider";
 import NavBar from "./NavBar";
 import SideBar from "./SideBar";
 import Container from "./Container";
@@ -13,14 +14,16 @@ export default function OpenNote({ setisLogin }) {
 
   return (
     <div className="App">
-      <NoteListContextProvider>
-        <ShowEditContext.Provider value={[Edit, setShowEdit, setSidebar]}>
-          <NavBar setSidebar={setSidebar} />
-          <SideBar Sidebar={Sidebar} setisLogin={setisLogin} />
-          <Container Sidebar={Sidebar} />
-          <View />
-        </ShowEditContext.Provider>
-      </NoteListContextProvider>
+      <EditNoteContextProvider>
+        <NoteListContextProvider>
+          <ShowEditContext.Provider value={[Edit, setShowEdit, setSidebar]}>
+            <NavBar setSidebar={setSidebar} />
+            <SideBar Sidebar={Sidebar} setisLogin={setisLogin} />
+            <Container Sidebar={Sidebar} />
+            <View />
+          </ShowEditContext.Provider>
+        </NoteListContextProvider>
+      </EditNoteContextProvider>
     </div>
   );
 }
