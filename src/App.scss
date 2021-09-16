@@ -174,7 +174,7 @@ body {
   width: 100%;
 }
 .Noteitem {
-  padding: 1.5em;
+  padding: 2em;
   margin: 2em;
   background: #066bc9;
   border-radius: 10px;
@@ -185,24 +185,28 @@ body {
   &:hover {
     filter: brightness(1.15);
   }
-  .Noteitem-Container {
-    flex: 1;
-    .Noteitem-title {
-      color: white;
-      font-size: 1.5rem;
-    }
-    .Noteitem-paragraph {
-      color: white;
-      font-size: 1rem;
-      overflow: hidden;
-      height: 4rem;
-    }
-    .Noteitem-time {
-      margin: 0 0 0.5em 0;
-      font-size: calc(1rem + 10%);
-      color: white;
-      flex: 0.25;
-    }
+
+  .Noteitem-paragraph,
+  .Noteitem-title,
+  .Noteitem-time {
+    pointer-events: none;
+  }
+
+  .Noteitem-title {
+    color: white;
+    font-size: 1.5rem;
+  }
+  .Noteitem-paragraph {
+    color: white;
+    font-size: 1rem;
+    overflow: hidden;
+    height: 4rem;
+  }
+  .Noteitem-time {
+    margin: 0 0 0.5em 0;
+    font-size: calc(1rem + 10%);
+    color: white;
+    flex: 0.25;
   }
 }
 .View {
@@ -400,10 +404,10 @@ body {
   }
 }
 
-@media (min-width: 750px) {
+@media (min-width: 720px) {
   .Container {
     //Mobile First
-    grid-template-columns: 50% 50%;
+    grid-template-columns: 45% 55%;
     .Preview-container {
       display: grid;
     }
