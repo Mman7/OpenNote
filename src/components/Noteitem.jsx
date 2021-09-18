@@ -3,6 +3,7 @@ import { ShowEditContext } from "./OpenNote";
 import { EditNoteContext } from "./EditNoteContextProvider";
 import { NoteContext } from "./NoteListContextProvider";
 import { NormalizeTime } from "./NormalizeTime";
+import ReactMarkdown from "react-markdown";
 
 export default function Noteitem({ note }) {
   const [ShowEdit, setShowEdit] = useContext(ShowEditContext);
@@ -28,7 +29,9 @@ export default function Noteitem({ note }) {
       <h2 className="Noteitem-time">
         Lastest Update: {NormalizeTime(note.createdAt)}
       </h2>
-      <p className="Noteitem-paragraph">{note.paragraph}</p>
+      <ReactMarkdown className="Noteitem-paragraph">
+        {note.paragraph}
+      </ReactMarkdown>
     </div>
   );
 }

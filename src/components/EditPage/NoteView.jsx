@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect } from "react";
 import { NoteContext } from "../NoteListContextProvider";
 import { EditNoteContext } from "../EditNoteContextProvider";
 import { NormalizeTime } from "../NormalizeTime";
+import ReactMarkdown from "react-markdown";
 
 export default function NoteView() {
   const [Notes, setNotes] = useContext(NoteContext);
@@ -22,10 +23,10 @@ export default function NoteView() {
         className="Edit-Date"
         defaultValue={NormalizeTime(ThisNote().createdAt)}
       ></input>
-      <textarea
+      <ReactMarkdown
         className="Edit-Note-Section"
-        defaultValue={ThisNote().paragraph}
-      ></textarea>
+        children={ThisNote().paragraph}
+      ></ReactMarkdown>
     </div>
   );
 }
