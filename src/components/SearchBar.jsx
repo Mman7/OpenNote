@@ -1,12 +1,16 @@
 import React, { useContext } from "react";
 import { ShowEditContext } from "./OpenNote";
+import { EditNoteContext } from "./EditNoteContextProvider";
 
 export default function SearchBar() {
-  const [, setShowEdit, setSidebar] = useContext(ShowEditContext);
+  const [Edit, setShowEdit, setSidebar] = useContext(ShowEditContext);
+  const [CurrentEditNote, setCurrentEditNote] = useContext(EditNoteContext);
+
   const AddNote = () => {
     setShowEdit((prev) => !prev);
     setSidebar(false);
   };
+
   return (
     <div className="Searchbar">
       <i className="fas fa-search"></i>
