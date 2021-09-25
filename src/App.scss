@@ -38,6 +38,7 @@ body {
 }
 .Sidebar {
   padding: 1em;
+  z-index: 5;
   width: 60%;
   max-width: 15rem;
   left: -150%;
@@ -303,6 +304,7 @@ body {
     font-size: 1.5rem;
   }
 }
+
 .ViewNavBar button {
   background: transparent;
   border: none;
