@@ -1,9 +1,10 @@
 import firebase from "firebase/compat/app";
-
+import { v4 as uuidv4 } from "uuid";
 import "firebase/compat/auth";
 import "firebase/compat/firestore";
 
 //*DOC*: https://firebase.google.com/docs/web/modular-upgrade#get_the_version_9_sdk
+//TODO : Get Firebase api with fetch
 
 const firebaseConfig = {
   apiKey: "AIzaSyCWl08_UZcgYk_pXc3cFump79S5qPPLLF8",
@@ -78,17 +79,26 @@ const db = firebase.firestore();
 export function SaveNote_To_DataBase(note) {
   console.log(note);
   firebase.auth().onAuthStateChanged((user) => {
-    if (user === undefined || null) return;
-    const { email, userId } = note;
-    if (email || userId === undefined || null) return;
+    // if (!user) return;
+
+    // if (user.email || user.userId === undefined || null) return;
+    const newUid = uuidv4();
+
     db.collection("users")
-      .doc(note.title)
+      .doc(newUid)
       .set({
-        email: note.email,
-        userId: note.userId,
-        title: note.title || "New Document",
+        // email: user.email,
+        // userId: user.uid,
+        // title: note.title || "New Document",
+        // createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+        // paragraph: note.paragraph ?? "Insert some text",
+        noteid: newUid,
+        email: "youzai042&@gmail.com",
+        userId: user.uid,
+        title: "Nihao wojiao heyi",
         createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-        paragraph: note.paragraph ?? "Insert some text",
+        paragraph:
+          " Lorem ipsum dolor sit amet consectetur adipisicing elit. Est numquam atque porro consequatur obcaecati ipsum.",
       })
       .then(() => {
         console.log("Document successfully written!");
@@ -100,14 +110,21 @@ export function SaveNote_To_DataBase(note) {
 }
 
 //TODO : Fix Firebase security rules
-//* ONLY USER ITSELF CAN READS THE DATA
+//* ONLY USER THEMSELF CAN READS THE DATA
 
-export function getData_From_DataBase() {
-  db.collection("users")
-    .get()
-    .then((querySnapshot) => {
-      querySnapshot.forEach((doc) => {
-        console.log(`${doc.data()}`);
-      });
-    });
+export async function getData_From_DataBase() {
+  const notelist = [];
+
+  const data = await new Promise((resolve) => {
+    db.collection("users")
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          notelist.push(doc.data());
+          resolve("Get Data Success");
+        });
+      })
+      .catch((err) => console.log(err));
+  });
+  return notelist;
 }
