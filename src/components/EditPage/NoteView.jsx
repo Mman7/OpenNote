@@ -18,8 +18,7 @@ export default function NoteView() {
         className="Edit-Date"
         defaultValue={NormalizeTime(CurrentEditNote?.createdAt)}
       ></input>
-      {/* if got note actived code below */}
-      {CurrentEditNote ? <MyEditor CurrentEditNote={CurrentEditNote} /> : ""}
+      <MyEditor CurrentEditNote={CurrentEditNote} />
     </div>
   );
 }
