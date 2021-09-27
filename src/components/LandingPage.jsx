@@ -16,9 +16,7 @@ export default function LandingPage({ isLogin, setisLogin }) {
     <div className={`Landing-Page ${isLogin ? "isLogin" : "nothign"}`}>
       <div className="Login">
         <div className="image">
-          <p>
-            Your Notes<br></br>You decise
-          </p>
+          <p>Welcome to OpenNote</p>
         </div>
         <form action="submit">
           <h1>Login</h1>
