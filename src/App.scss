@@ -240,20 +240,6 @@ body {
     background: lightyellow;
     grid-area: Edit-Section;
   }
-  .Edit-tool {
-    //TODO Edit Tool change it to fixed when ((Edit mode ))
-    background: lightskyblue;
-    position: fixed;
-    bottom: 0%;
-    width: 100%;
-    button {
-      border: none;
-      outline: none;
-      background: lightseagreen;
-      padding: 1em;
-      margin: 1em;
-    }
-  }
 }
 .slideshow {
   right: 150%;
@@ -268,13 +254,15 @@ body {
   display: grid;
   grid-auto-columns: 1fr;
   grid-template-columns: 0.5fr 0.5fr;
-  grid-template-rows: 10% auto;
+  grid-template-rows: 10% 90%;
   gap: 0% 0%;
   grid-template-areas:
     "Edit-title Edit-Date"
     "Edit-Note-Section Edit-Note-Section";
   height: 100%;
-
+  .ql-editor {
+    border: 0px solid white;
+  }
   textarea {
     outline: none;
   }
@@ -297,10 +285,13 @@ body {
     grid-area: Edit-Date;
     background: lightseagreen;
   }
+  .quill {
+    height: 100%;
+  }
   .Edit-Note-Section {
     grid-area: Edit-Note-Section;
+    width: 100%;
     background: mediumspringgreen;
-    padding: 1em;
     font-size: 1.5rem;
   }
 }
@@ -413,7 +404,7 @@ body {
   }
 }
 
-@media (min-width: 720px) {
+@media (min-width: 800px) {
   .Container {
     //Mobile First
     grid-template-columns: 45% 55%;
