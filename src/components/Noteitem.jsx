@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
 import { ShowEditContext } from "./OpenNote";
-import { EditNoteContext } from "./EditNoteContextProvider";
-import { NoteContext } from "./NoteListContextProvider";
-import { NormalizeTime } from "./NormalizeTime";
+import { EditNoteContext } from "./Context/EditNoteContextProvider";
+import { NoteContext } from "./Context/NoteListContextProvider";
+import { NormalizeTime } from "./Logical-Javascript/NormalizeTime";
 import ReactMarkdown from "react-markdown";
 
 export default function Noteitem({ note }) {
