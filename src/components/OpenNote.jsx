@@ -1,6 +1,6 @@
 import React, { useState, createContext, useContext } from "react";
-import { NoteListContextProvider } from "./NoteListContextProvider";
-import { EditNoteContextProvider } from "./EditNoteContextProvider";
+import { NoteListContextProvider } from "./Context/NoteListContextProvider";
+import { EditNoteContextProvider } from "./Context/EditNoteContextProvider";
 import NavBar from "./NavBar";
 import SideBar from "./SideBar";
 import Container from "./Container";
