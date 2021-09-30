@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
 import NoteView from "./EditPage/NoteView";
-import EditPageTool from "./EditPage/EditPageTool";
 import ViewNavBar from "./EditPage/ViewNavBar";
 import { ShowEditContext } from "./OpenNote";
 
@@ -19,7 +18,6 @@ export default function View() {
     >
       <ViewNavBar />
       <section className="Edit-Section">
-        <EditPageTool />
         <NoteView />
       </section>
     </div>
