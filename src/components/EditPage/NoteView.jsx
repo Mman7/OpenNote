@@ -1,8 +1,8 @@
 import React, { useState, useContext, useEffect } from "react";
-import { NoteContext } from "../NoteListContextProvider";
-import { EditNoteContext } from "../EditNoteContextProvider";
-import { NormalizeTime } from "../NormalizeTime";
-import MyEditor from "./TextEditor";
+import { NoteContext } from "../Context/NoteListContextProvider";
+import { EditNoteContext } from "../Context/EditNoteContextProvider";
+import { NormalizeTime } from "../Logical-Javascript/NormalizeTime";
+import TextEditor from "./TextEditor";
 
 export default function NoteView() {
   const [Notes, setNotes] = useContext(NoteContext);
@@ -18,7 +18,7 @@ export default function NoteView() {
         className="Edit-Date"
         defaultValue={NormalizeTime(CurrentEditNote?.createdAt)}
       ></input>
-      <MyEditor CurrentEditNote={CurrentEditNote} />
+      <TextEditor CurrentEditNote={CurrentEditNote} />
     </div>
   );
 }
