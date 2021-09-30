@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { ShowEditContext } from "./OpenNote";
-import { EditNoteContext } from "./EditNoteContextProvider";
+import { EditNoteContext } from "./Context/EditNoteContextProvider";
 
 export default function SearchBar() {
   const [Edit, setShowEdit, setSidebar] = useContext(ShowEditContext);
