@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { NoteContext } from "./NoteListContextProvider";
+import { NoteContext } from "./Context/NoteListContextProvider";
 import Noteitem from "./Noteitem";
 
 export default function NoteList() {
