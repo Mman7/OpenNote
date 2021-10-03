@@ -109,6 +109,32 @@ export function SaveNote_To_DataBase(note) {
   });
 }
 
+export function NewNote(note) {
+  //* note paragraph include
+  // title
+  // paragraph
+  firebase.auth().onAuthStateChanged((user) => {
+    const newUid = uuidv4();
+    db.collection("users")
+      .doc(newUid)
+      .set({
+        noteid: newUid,
+        email: user.email,
+        userId: user.uid,
+        title: note.title,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+        //paragraph if could best is delta object
+        paragraph: note.paragraph,
+      })
+      .then(() => {
+        console.log("Document successfully written!");
+      })
+      .catch((error) => {
+        console.error("Error writing document: ", error);
+      });
+  });
+}
+
 //TODO : Fix Firebase security rules
 //* ONLY USER THEMSELF CAN READS THE DATA
 
