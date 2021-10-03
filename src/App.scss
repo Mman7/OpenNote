@@ -246,7 +246,30 @@ body {
 }
 .ViewNavBar {
   background: peru;
+  display: flex;
+  justify-content: space-between;
   grid-area: ViewNavBar;
+  .Save-Note-btn {
+    display: none;
+  }
+  .Save-Note-btn-show {
+    display: block;
+  }
+  button {
+    background: transparent;
+    border: none;
+    margin: 1rem;
+    font-size: 2.5rem;
+    color: white;
+    border-radius: 10px;
+    outline: none;
+    cursor: pointer;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+    &:hover {
+      background: rgba(255, 255, 255, 0.404);
+    }
+  }
 }
 
 .Edit-NoteView {
@@ -294,22 +317,6 @@ body {
     background: mediumspringgreen;
     font-size: 1.5rem;
   }
-}
-
-.ViewNavBar button {
-  background: transparent;
-  border: none;
-  margin: 1rem;
-  font-size: 2.5rem;
-  color: white;
-  border-radius: 10px;
-  outline: none;
-  cursor: pointer;
-  padding-left: 0.5em;
-  padding-right: 0.5em;
-}
-.ViewNavBar button:hover {
-  background: rgba(255, 255, 255, 0.404);
 }
 
 .Landing-Page {
