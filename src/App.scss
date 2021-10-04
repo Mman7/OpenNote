@@ -305,6 +305,7 @@ body {
     background: lightcoral;
   }
   .Edit-Date {
+    pointer-events: none;
     grid-area: Edit-Date;
     background: lightseagreen;
   }
