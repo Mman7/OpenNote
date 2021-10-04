@@ -109,8 +109,8 @@ export function SaveNote_To_DataBase(note) {
   });
 }
 
-export function NewNote(note) {
-  //* note paragraph include
+export function NewNote({ title, paragraph }) {
+  //* note param must include
   // title
   // paragraph
   firebase.auth().onAuthStateChanged((user) => {
@@ -124,6 +124,26 @@ export function NewNote(note) {
         title: note.title,
         createdAt: firebase.firestore.FieldValue.serverTimestamp(),
         //paragraph if could best is delta object
+        paragraph: note.paragraph,
+      })
+      .then(() => {
+        console.log("Document successfully written!");
+      })
+      .catch((error) => {
+        console.error("Error writing document: ", error);
+      });
+  });
+}
+export function UpdateNote(note, noteid) {
+  //* note paragraph include
+  // title
+  // paragraph
+  firebase.auth().onAuthStateChanged((user) => {
+    db.collection("users")
+      .doc(noteid)
+      .set({
+        title: note.title,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
         paragraph: note.paragraph,
       })
       .then(() => {
