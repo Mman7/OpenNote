@@ -3,7 +3,9 @@ import { ShowEditContext } from "./OpenNote";
 import { EditNoteContext } from "./Context/EditNoteContextProvider";
 import { NoteContext } from "./Context/NoteListContextProvider";
 import { NormalizeTime } from "./Logical-Javascript/NormalizeTime";
+import { GlobalNoteContext } from "./Context/GlobalValueContext";
 import ReactQuill from "react-quill";
+import { isThisNoteCreated } from "./FireBaseApi";
 
 let mainRef = createRef();
 
@@ -11,11 +13,8 @@ export default function Noteitem({ note }) {
   const [Notes, setNotes] = useContext(NoteContext);
   const [ShowEditPage, setShowEditPage] = useContext(ShowEditContext);
   const [CurrentEditNote, setCurrentEditNote] = useContext(EditNoteContext);
-
-  //FIXME check if bug is fix
-
-  const isDeltaData = () =>
-    note.paragraph[0] === "{" ? JSON.parse(note.paragraph) : note.paragraph;
+  const [GlobalValueContext, setGlobalValueContext] =
+    useContext(GlobalNoteContext);
 
   const EditNoteHandle = () => {
     setShowEditPage((prev) => !prev);
@@ -25,6 +24,7 @@ export default function Noteitem({ note }) {
     const NoteId = e.target.dataset.id;
     const EditThisNote = Notes.filter((note) => note.noteid === NoteId);
     setCurrentEditNote(EditThisNote[0]);
+    setGlobalValueContext(EditThisNote[0]);
     EditNoteHandle();
   };
 
@@ -47,7 +47,7 @@ export default function Noteitem({ note }) {
       <ReactQuill
         className="Noteitem-paragraph"
         theme="snow"
-        value={isDeltaData()}
+        value={JSON.parse(note.paragraph)}
         ref={mainRef}
         readOnly={true}
         modules={modules}
