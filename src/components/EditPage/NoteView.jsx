@@ -10,11 +10,9 @@ export default function NoteView() {
   const [GlobalValueContext, setGlobalValueContext] =
     useContext(GlobalNoteContext);
   const [CurrentEditNote, setCurrentEditNote] = useContext(EditNoteContext);
-  const [Title, setTitle] = useState("");
+  const [Title, setTitle] = useState(null);
+  const [date, setdate] = useState(null);
   const [Paragraph, setParagraph] = useState("");
-
-  const title = useRef(null);
-  const date = useRef(null);
 
   const UpdateGlobalContent = () => {
     // update title and paragraph to global Content
@@ -27,28 +25,26 @@ export default function NoteView() {
     setTitle(e.target.value);
   };
 
-  //FIXME : when click to the note  //* Title doest update to global
-
   useEffect(() => {
+    //Everytime it change update to Global Content
     UpdateGlobalContent();
   }, [Title, Paragraph]);
 
   useEffect(() => {
-    const noteTitle = title.current;
-    const noteDate = date.current;
-    //if CurrentEditNote value is undefined automatic change to New Document
-    noteTitle.value = CurrentEditNote?.title ?? "New Document";
-    noteDate.value = NormalizeTime(CurrentEditNote?.createdAt) ?? "";
+    // if CurrentEditNote value is undefined automatic change to New Document
+    // intial Current Content when user click on
+    setTitle(CurrentEditNote?.title ?? "New Document");
+    setdate(NormalizeTime(CurrentEditNote?.createdAt) ?? "");
   }, [CurrentEditNote]);
 
   return (
     <div className="Edit-NoteView">
       <input
+        defaultValue={Title}
         onChange={(e) => titleHandler(e)}
         className="Edit-title"
-        ref={title}
       ></input>
-      <input className="Edit-Date" ref={date}></input>
+      <input defaultValue={date} className="Edit-Date"></input>
       <TextEditor
         UpdateGlobalContent={UpdateGlobalContent}
         setParagraph={setParagraph}
