@@ -21,7 +21,10 @@ export default function MyEditor({
 
   useEffect(() => {
     // if currentEditnote change editor change
-    setEditorValue(CurrentEditNote?.paragraph);
+    // if Intial data is a undefined then automatic change it to a fake object string
+    const data = JSON.parse(CurrentEditNote?.paragraph ?? "{}");
+
+    setEditorValue(data);
   }, [CurrentEditNote]);
 
   useEffect(() => {
@@ -31,7 +34,7 @@ export default function MyEditor({
     setisDifferent(isDifferentComparator(editorContent, currentContent));
 
     //paragraphHandler function is update content to global content
-    setParagraph(mainRef.current.unprivilegedEditor.getContents());
+    setParagraph(editorContent);
   }, [EditorValue]);
 
   return (
