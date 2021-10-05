@@ -6,8 +6,10 @@ export default function SearchBar() {
   const [Edit, setShowEdit, setSidebar] = useContext(ShowEditContext);
   const [CurrentEditNote, setCurrentEditNote] = useContext(EditNoteContext);
 
+  //TODO: New Note btn function
   const AddNote = () => {
     setShowEdit((prev) => !prev);
+    setCurrentEditNote("");
     setSidebar(false);
   };
 
