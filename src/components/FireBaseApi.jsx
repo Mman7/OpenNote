@@ -77,54 +77,33 @@ export function isSignInChecker(callback) {
 const db = firebase.firestore();
 
 export function SaveNote_To_DataBase(note) {
-  console.log(note);
+  //*FIXME when the netspeed is really slow, they will click twice to make sure its work
+  //* FIX they cant click twice , example like add a loading screen
   firebase.auth().onAuthStateChanged((user) => {
-    // if (!user) return;
-
-    // if (user.email || user.userId === undefined || null) return;
-    const newUid = uuidv4();
-
-    db.collection("users")
-      .doc(newUid)
-      .set({
-        // email: user.email,
-        // userId: user.uid,
-        // title: note.title || "New Document",
-        // createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-        // paragraph: note.paragraph ?? "Insert some text",
-        noteid: newUid,
-        email: "youzai042&@gmail.com",
-        userId: user.uid,
-        title: "Nihao wojiao heyi",
-        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-        paragraph:
-          " Lorem ipsum dolor sit amet consectetur adipisicing elit. Est numquam atque porro consequatur obcaecati ipsum.",
-      })
-      .then(() => {
-        console.log("Document successfully written!");
-      })
-      .catch((error) => {
-        console.error("Error writing document: ", error);
-      });
+    if (isThisNoteCreated(note)) {
+      UpdateNote(note);
+    } else {
+      newNote(note);
+    }
   });
 }
 
-export function NewNote({ title, paragraph }) {
+export function newNote(note) {
   //* note param must include
   // title
   // paragraph
   firebase.auth().onAuthStateChanged((user) => {
     const newUid = uuidv4();
-    db.collection("users")
+    db.collection("notes")
       .doc(newUid)
       .set({
         noteid: newUid,
         email: user.email,
         userId: user.uid,
-        title: note.title,
+        title: note.title ?? "New Document",
         createdAt: firebase.firestore.FieldValue.serverTimestamp(),
         //paragraph if could best is delta object
-        paragraph: note.paragraph,
+        paragraph: JSON.stringify(note.paragraph),
       })
       .then(() => {
         console.log("Document successfully written!");
@@ -134,20 +113,20 @@ export function NewNote({ title, paragraph }) {
       });
   });
 }
-export function UpdateNote(note, noteid) {
+export function UpdateNote(note) {
   //* note paragraph include
   // title
   // paragraph
   firebase.auth().onAuthStateChanged((user) => {
-    db.collection("users")
-      .doc(noteid)
-      .set({
+    db.collection("notes")
+      .doc(note.noteid)
+      .update({
         title: note.title,
         createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-        paragraph: note.paragraph,
+        paragraph: JSON.stringify(note.paragraph),
       })
       .then(() => {
-        console.log("Document successfully written!");
+        console.log("Document successfully Updated!");
       })
       .catch((error) => {
         console.error("Error writing document: ", error);
@@ -162,7 +141,7 @@ export async function getData_From_DataBase() {
   const notelist = [];
 
   const data = await new Promise((resolve) => {
-    db.collection("users")
+    db.collection("notes")
       .get()
       .then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
@@ -170,7 +149,13 @@ export async function getData_From_DataBase() {
           resolve("Get Data Success");
         });
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.warn(err));
   });
   return notelist;
+}
+
+import { includes } from "lodash";
+
+export function isThisNoteCreated(note) {
+  return includes(note, note.noteid);
 }
