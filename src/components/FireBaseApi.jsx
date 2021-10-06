@@ -76,15 +76,17 @@ export function isSignInChecker(callback) {
 
 const db = firebase.firestore();
 
-export function SaveNote_To_DataBase(note) {
+export async function SaveNote_To_DataBase(note) {
   //*FIXME when the netspeed is really slow, they will click twice to make sure its work
   //* FIX they cant click twice , example like add a loading screen
-  firebase.auth().onAuthStateChanged((user) => {
-    if (isThisNoteCreated(note)) {
-      UpdateNote(note);
-    } else {
-      newNote(note);
-    }
+  return new Promise((resolve, reject) => {
+    firebase.auth().onAuthStateChanged((user) => {
+      if (isThisNoteCreated(note)) {
+        UpdateNote(note).then(() => resolve());
+      } else {
+        newNote(note).then(() => resolve());
+      }
+    });
   });
 }
 
@@ -92,45 +94,51 @@ export function newNote(note) {
   //* note param must include
   // title
   // paragraph
-  firebase.auth().onAuthStateChanged((user) => {
-    const newUid = uuidv4();
-    db.collection("notes")
-      .doc(newUid)
-      .set({
-        noteid: newUid,
-        email: user.email,
-        userId: user.uid,
-        title: note.title ?? "New Document",
-        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-        //paragraph if could best is delta object
-        paragraph: JSON.stringify(note.paragraph),
-      })
-      .then(() => {
-        console.log("Document successfully written!");
-      })
-      .catch((error) => {
-        console.error("Error writing document: ", error);
-      });
+  return new Promise((resolve, reject) => {
+    firebase.auth().onAuthStateChanged((user) => {
+      const newUid = uuidv4();
+      db.collection("notes")
+        .doc(newUid)
+        .set({
+          noteid: newUid,
+          email: user.email,
+          userId: user.uid,
+          title: note.title ?? "New Document",
+          createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+          //paragraph if could best is delta object
+          paragraph: JSON.stringify(note.paragraph),
+        })
+        .then(() => {
+          console.log("Document successfully written!");
+          resolve();
+        })
+        .catch((error) => {
+          console.error("Error writing document: ", error);
+        });
+    });
   });
 }
 export function UpdateNote(note) {
   //* note paragraph include
   // title
   // paragraph
-  firebase.auth().onAuthStateChanged((user) => {
-    db.collection("notes")
-      .doc(note.noteid)
-      .update({
-        title: note.title,
-        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-        paragraph: JSON.stringify(note.paragraph),
-      })
-      .then(() => {
-        console.log("Document successfully Updated!");
-      })
-      .catch((error) => {
-        console.error("Error writing document: ", error);
-      });
+  return new Promise((resolve, reject) => {
+    firebase.auth().onAuthStateChanged((user) => {
+      db.collection("notes")
+        .doc(note.noteid)
+        .update({
+          title: note.title,
+          createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+          paragraph: JSON.stringify(note.paragraph),
+        })
+        .then(() => {
+          console.log("Document successfully Updated!");
+          resolve();
+        })
+        .catch((error) => {
+          console.error("Error writing document: ", error);
+        });
+    });
   });
 }
 
