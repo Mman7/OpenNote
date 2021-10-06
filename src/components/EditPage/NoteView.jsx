@@ -45,12 +45,7 @@ export default function NoteView() {
         className="Edit-title"
       ></input>
       <input defaultValue={date} className="Edit-Date"></input>
-      <TextEditor
-        UpdateGlobalContent={UpdateGlobalContent}
-        setParagraph={setParagraph}
-        CurrentEditNote={CurrentEditNote}
-        setCurrentEditNote={setCurrentEditNote}
-      />
+      <TextEditor setParagraph={setParagraph} />
     </div>
   );
 }
