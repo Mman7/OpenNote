@@ -7,7 +7,7 @@ import { SaveNote_To_DataBase, getData_From_DataBase } from "../FireBaseApi";
 import { GlobalNoteContext } from "../Context/GlobalValueContext";
 
 export default function ViewNavBar() {
-  const [Notes, setNotes] = useContext(NoteContext);
+  const [Notes, setNotes, UpdateList] = useContext(NoteContext);
   const [, setShowEdit] = useContext(ShowEditContext);
   const [isDifferent, setisDifferent] = useContext(isDifferentContext);
   const [CurrentEditNote, setCurrentEditNote] = useContext(EditNoteContext);
@@ -16,20 +16,22 @@ export default function ViewNavBar() {
 
   const BackToNotePage = async () => {
     setShowEdit((prev) => !prev);
+
     //clean CurrentEditNote and GlobalValueContext
     setCurrentEditNote(null);
     setGlobalValueContext(null);
-    // update checker
 
-    const newNote = await getData_From_DataBase();
-    setNotes(() => newNote);
+    // keep update
+    UpdateList();
   };
 
   const isDifferentHandler = () => (isDifferent ? "Save-Note-btn-show" : "");
 
-  //TODO Save Note function
-  const saveChangesHandler = () => {
-    SaveNote_To_DataBase(GlobalValueContext);
+  //TODO make a isLoading
+  const saveChangesHandler = async () => {
+    await SaveNote_To_DataBase(GlobalValueContext);
+    await setisDifferent(false);
+    await UpdateList();
   };
 
   return (
