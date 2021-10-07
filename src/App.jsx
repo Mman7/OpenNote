@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import LandingPage from "./components/LandingPage";
 import OpenNote from "./components/OpenNote";
 import { GoogleSignIn } from "./components/FireBaseApi";
+import { IsLoadingContextProvider } from "./components/Context/LoadingContextProvider";
 
 import "./App.scss";
 import "./components/FireBaseApi";
@@ -14,10 +15,14 @@ function App() {
     GoogleSignIn();
     setisLogin(true);
   };
-  return isLogin ? (
-    <OpenNote setisLogin={setisLogin} isLogin={isLogin} />
-  ) : (
-    <LandingPage setisLogin={setisLogin} isLogin={isLogin} />
+  return (
+    <IsLoadingContextProvider>
+      {isLogin ? (
+        <OpenNote setisLogin={setisLogin} isLogin={isLogin} />
+      ) : (
+        <LandingPage setisLogin={setisLogin} isLogin={isLogin} />
+      )}
+    </IsLoadingContextProvider>
   );
 }
 
