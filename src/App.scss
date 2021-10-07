@@ -91,19 +91,19 @@ body {
   z-index: 100;
   width: 100%;
   background: black;
-  padding: 10px;
+  padding: 5px;
   -webkit-box-shadow: 0px 9px 15px 8px rgba(0, 0, 0, 0.51);
   box-shadow: 0px 9px 15px 8px rgba(0, 0, 0, 0.51);
   display: flex;
   justify-content: space-between;
   button {
-    font-size: 2.5rem;
+    font-size: 2rem;
     background: transparent;
     outline: none;
     border: none;
     border-radius: 10px;
     color: white;
-    padding: 0.2em;
+    padding: 0.25em;
     transform: scaleY(0.9);
     transition: all 0.25s ease;
     cursor: pointer;
@@ -175,6 +175,7 @@ body {
   width: 100%;
 }
 .Noteitem {
+  position: relative;
   padding: 2em;
   margin: 2em;
   background: #066bc9;
@@ -183,6 +184,7 @@ body {
   overflow: hidden;
   transition: all 0.3s ease;
   height: 10rem;
+  z-index: 200;
   &:hover {
     filter: brightness(1.15);
   }
@@ -243,6 +245,7 @@ body {
 }
 .ViewNavBar {
   background: peru;
+  padding: 5px;
   display: flex;
   justify-content: space-between;
   grid-area: ViewNavBar;
@@ -252,34 +255,56 @@ body {
   .Save-Note-btn-show {
     display: block;
   }
+  .nav-note-menu {
+    display: block;
+  }
+  .nav-note-menu-hidden {
+    display: none;
+  }
   button {
     background: transparent;
+    padding: 0.25em 0.5em;
     border: none;
-    margin: 1rem;
-    font-size: 2.5rem;
+    font-size: 2rem;
     color: white;
     border-radius: 10px;
     outline: none;
     cursor: pointer;
-    padding-left: 0.5em;
-    padding-right: 0.5em;
     &:hover {
       background: rgba(255, 255, 255, 0.404);
     }
   }
 }
+.Loading {
+  position: fixed;
+  display: none;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 100;
+  padding: 10em 10em;
+  background: cornflowerblue;
+  .icon {
+    font-size: 1000%;
+    animation: rotate 1s ease infinite;
+    color: black;
+  }
+}
+.show {
+  display: block;
+}
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
 
 .Edit-NoteView {
   grid-area: Edit-NoteView;
-  display: grid;
-  grid-auto-columns: 1fr;
-  grid-template-columns: 0.5fr 0.5fr;
-  grid-template-rows: 10% 90%;
-  gap: 0% 0%;
-  grid-template-areas:
-    "Edit-title Edit-Date"
-    "Edit-Note-Section Edit-Note-Section";
-  height: 100%;
+
   .ql-editor {
     border: 0px solid white;
   }
@@ -295,19 +320,20 @@ body {
   .Edit-Date {
     outline: none;
     font-size: calc(1rem + 1vw);
-    padding: 0 calc(0.5em + 1vw);
   }
   .Edit-title {
     grid-area: Edit-title;
     background: lightcoral;
+    padding: 0.5em;
   }
   .Edit-Date {
+    padding: 0.25em 0.5em;
     pointer-events: none;
     grid-area: Edit-Date;
     background: lightseagreen;
   }
   .quill {
-    height: 100%;
+    height: 100vh;
   }
   .Edit-Note-Section {
     grid-area: Edit-Note-Section;
