@@ -16,6 +16,7 @@ export default function Noteitem({ note }) {
   const [GlobalValueContext, setGlobalValueContext] =
     useContext(GlobalNoteContext);
 
+  //TODO delete note function
   const EditNoteHandle = () => {
     setShowEditPage((prev) => !prev);
   };
@@ -43,7 +44,6 @@ export default function Noteitem({ note }) {
       <h2 data-plaintext="true" className="Noteitem-time">
         Lastest Update: {NormalizeTime(note.createdAt)}
       </h2>
-
       <ReactQuill
         className="Noteitem-paragraph"
         theme="snow"
