@@ -29,12 +29,12 @@ googleProvider.setCustomParameters({
 firebase.auth().useDeviceLanguage();
 
 //GoogleSignIn
-export function GoogleSignIn(callback) {
+export function GoogleSignIn(changeState) {
   firebase
     .auth()
     .signInWithRedirect(googleProvider)
     .then((user) => {
-      callback(true);
+      changeState(true);
       console.log(user);
     });
 }
@@ -160,6 +160,13 @@ export async function getData_From_DataBase() {
   return notelist;
 }
 
+import { doc, deleteDoc } from "firebase/firestore";
+
+export async function Delete_Note(noteid) {
+  await deleteDoc(doc(db, "notes", noteid))
+    .then(() => console.log("Sucessfull Delete" + noteid))
+    .catch((err) => console.log(err));
+}
 import { includes } from "lodash";
 
 export function isThisNoteCreated(note) {
