@@ -14,8 +14,8 @@ export default function SideBar({ Sidebar, setisLogin }) {
         <a>
           <img src={getCurrentUser()?.photoURL} alt="User Img" />
         </a>
-        <h1 className="user-display-name">{getCurrentUser().displayName}</h1>
-        <h1 className="user-email">{getCurrentUser().email}</h1>
+        <h1 className="user-display-name">{getCurrentUser()?.displayName}</h1>
+        <h1 className="user-email">{getCurrentUser()?.email}</h1>
       </div>
       <button className="hey">hey2</button>
       <button>hey3</button>
