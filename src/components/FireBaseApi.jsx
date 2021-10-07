@@ -77,8 +77,6 @@ export function isSignInChecker(callback) {
 const db = firebase.firestore();
 
 export async function SaveNote_To_DataBase(note) {
-  //*FIXME when the netspeed is really slow, they will click twice to make sure its work
-  //* FIX they cant click twice , example like add a loading screen
   return new Promise((resolve, reject) => {
     firebase.auth().onAuthStateChanged((user) => {
       if (isThisNoteCreated(note)) {
