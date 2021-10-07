@@ -184,7 +184,6 @@ body {
   overflow: hidden;
   transition: all 0.3s ease;
   height: 10rem;
-  z-index: 200;
   &:hover {
     filter: brightness(1.15);
   }
@@ -255,11 +254,26 @@ body {
   .Save-Note-btn-show {
     display: block;
   }
-  .nav-note-menu {
-    display: block;
+  .menu-fist-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    h1,
+    .trash,
+    i {
+      margin: auto;
+    }
+    h1 {
+      font-size: 1.5rem;
+    }
+    .trash,
+    i {
+      font-size: 1.5rem;
+    }
   }
-  .nav-note-menu-hidden {
-    display: none;
+  .dropdown-menu {
+    //something
+    background: white;
   }
   button {
     background: transparent;
@@ -386,13 +400,20 @@ body {
     }
   }
   form {
+    height: 50vh;
     display: flex;
     flex-direction: column;
     width: 100%;
     padding: 2em;
-    h1 {
-      padding: 0 0 1em 0;
-      font-size: 2rem;
+    .Provider-SignIn {
+      margin-top: auto;
+      margin-bottom: auto;
+      button {
+        font-size: 1.5rem;
+      }
+    }
+    label {
+      font-size: 1rem;
     }
     input {
       border: none;
@@ -404,36 +425,6 @@ body {
       transition: all 0.35s ease;
       &:hover {
         box-shadow: rgba(0, 36, 102, 0.55) 0px 5px 15px;
-      }
-    }
-    .Provider-SignIn {
-      padding: 1em;
-      margin-top: 2em;
-      display: flex;
-      align-items: center;
-      fieldset {
-        border: none;
-        border-top: 2px solid gray;
-        width: 100%;
-        legend {
-          transform: translateY(-5px);
-          font-size: 2rem;
-          margin-left: auto;
-          margin-right: auto;
-          padding: 1em;
-        }
-      }
-      h1 {
-        font-size: 2rem;
-      }
-      button {
-        margin: 0 0.5em;
-        transform: translateY(5px);
-        @include prestyle-btn(none, none);
-        font-size: 2rem;
-        &:hover {
-          color: blue;
-        }
       }
     }
   }
