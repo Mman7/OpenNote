@@ -1,10 +1,12 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { ShowEditContext } from "../OpenNote";
 import { isDifferentContext } from "../Context/NoteIsDifferentProvider";
 import { NoteContext } from "../Context/NoteListContextProvider";
 import { EditNoteContext } from "../Context/EditNoteContextProvider";
-import { SaveNote_To_DataBase, getData_From_DataBase } from "../FireBaseApi";
+import { SaveNote_To_DataBase, Delete_Note } from "../FireBaseApi";
 import { GlobalNoteContext } from "../Context/GlobalValueContext";
+import { Dropdown } from "react-bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 export default function ViewNavBar() {
   const [Notes, setNotes, UpdateList] = useContext(NoteContext);
@@ -13,6 +15,7 @@ export default function ViewNavBar() {
   const [CurrentEditNote, setCurrentEditNote] = useContext(EditNoteContext);
   const [GlobalValueContext, setGlobalValueContext] =
     useContext(GlobalNoteContext);
+  const [showMenu, setshowMenu] = useState(false);
 
   const BackToNotePage = async () => {
     setShowEdit((prev) => !prev);
@@ -27,10 +30,18 @@ export default function ViewNavBar() {
 
   const isDifferentHandler = () => (isDifferent ? "Save-Note-btn-show" : "");
 
-  //TODO make a isLoading
+  const menuHandler = () => (showMenu ? "nav-note-menu-hidden" : "");
+
+  const DeleteNoteHandler = () => {
+    const noteThatSelected = GlobalValueContext.noteid;
+    Delete_Note(noteThatSelected);
+    BackToNotePage();
+  };
+
   const saveChangesHandler = async () => {
     await SaveNote_To_DataBase(GlobalValueContext);
     await setisDifferent(false);
+    await setshowMenu(true);
     await UpdateList();
   };
 
@@ -45,6 +56,22 @@ export default function ViewNavBar() {
       >
         <i className="fas fa-check-square"></i>
       </button>
+      <Dropdown>
+        <Dropdown.Toggle
+          variant="success"
+          id="dropdown-basic"
+        ></Dropdown.Toggle>
+
+        <Dropdown.Menu>
+          <Dropdown.Item
+            className="menu-fist-item "
+            onClick={DeleteNoteHandler}
+          >
+            <h1>Delete</h1>
+            <i className="fas fa-trash trash"></i>
+          </Dropdown.Item>
+        </Dropdown.Menu>
+      </Dropdown>
     </div>
   );
 }
