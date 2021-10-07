@@ -1,15 +1,18 @@
-import React from "react";
+import React, { useContext } from "react";
 import { isSignInChecker } from "./FireBaseApi";
-
+import { Form, Button } from "react-bootstrap";
 import { GoogleSignIn } from "./FireBaseApi";
+import { isLoadingContext } from "./Context/LoadingContextProvider";
 
 export default function LandingPage({ isLogin, setisLogin }) {
+  const [isLoading, ChangeIsLoading] = useContext(isLoadingContext);
   const setisLoginState = setisLogin;
   isSignInChecker(setisLoginState);
 
-  const LoginHandle = (e) => {
+  const LoginHandle = async (e) => {
     e.preventDefault();
-    GoogleSignIn(setisLoginState);
+    ChangeIsLoading();
+    await GoogleSignIn(setisLoginState);
   };
 
   return (
@@ -18,19 +21,26 @@ export default function LandingPage({ isLogin, setisLogin }) {
         <div className="image">
           <p>Welcome to OpenNote</p>
         </div>
-        <form action="submit">
-          <h1>Login</h1>
-          <input type="text" placeholder="User" />
-          <input type="text" placeholder="Password" />
-          <section className="Provider-SignIn">
-            <fieldset>
-              <legend>or</legend>
-              <button onClick={LoginHandle}>
-                <i className="fab fa-google"></i>
-              </button>
-            </fieldset>
-          </section>
-        </form>
+
+        <Form>
+          <Form.Group className="mb-3" controlId="formBasicEmail">
+            <Form.Label className="form-label">Email address</Form.Label>
+            <Form.Control type="email" placeholder="Enter email" />
+          </Form.Group>
+
+          <Form.Group className="mb-3" controlId="formBasicPassword">
+            <Form.Label>Password</Form.Label>
+            <Form.Control type="password" placeholder="Password" />
+          </Form.Group>
+          <Button variant="primary" type="submit">
+            Submit
+          </Button>
+          <Form.Group className="Provider-SignIn">
+            <Button onClick={LoginHandle}>
+              <i className="fab fa-google"></i>
+            </Button>
+          </Form.Group>
+        </Form>
       </div>
     </div>
   );
