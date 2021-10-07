@@ -1,9 +1,6 @@
 import React, { useState, createContext, useEffect, useContext } from "react";
 import { getData_From_DataBase } from "../FireBaseApi";
-import {
-  IsLoadingContextProvider,
-  isLoadingContext,
-} from "./LoadingContextProvider";
+import { isLoadingContext } from "./LoadingContextProvider";
 
 export const NoteContext = createContext([]);
 
@@ -24,10 +21,8 @@ export function NoteListContextProvider({ children }) {
   }, []);
 
   return (
-    <IsLoadingContextProvider>
-      <NoteContext.Provider value={[Notes, setNotes, UpdateList]}>
-        {children}
-      </NoteContext.Provider>
-    </IsLoadingContextProvider>
+    <NoteContext.Provider value={[Notes, setNotes, UpdateList]}>
+      {children}
+    </NoteContext.Provider>
   );
 }
