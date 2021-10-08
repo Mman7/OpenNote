@@ -6,6 +6,7 @@ export const NoteContext = createContext([]);
 
 export function NoteListContextProvider({ children }) {
   const [Notes, setNotes] = useState([]);
+  const [hadSearchBarValue, sethadSearchBarValue] = useState("");
   const [isLoading, ChangeIsLoading] = useContext(isLoadingContext);
 
   const UpdateList = async () => {
@@ -21,7 +22,15 @@ export function NoteListContextProvider({ children }) {
   }, []);
 
   return (
-    <NoteContext.Provider value={[Notes, setNotes, UpdateList]}>
+    <NoteContext.Provider
+      value={[
+        Notes,
+        setNotes,
+        UpdateList,
+        hadSearchBarValue,
+        sethadSearchBarValue,
+      ]}
+    >
       {children}
     </NoteContext.Provider>
   );
