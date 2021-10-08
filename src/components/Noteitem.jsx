@@ -5,28 +5,40 @@ import { NoteContext } from "./Context/NoteListContextProvider";
 import { NormalizeTime } from "./Logical-Javascript/NormalizeTime";
 import { GlobalNoteContext } from "./Context/GlobalValueContext";
 import ReactQuill from "react-quill";
-import { isThisNoteCreated } from "./FireBaseApi";
+import useMediaQuery from "./PreviewTab/MediaQuery";
 
 let mainRef = createRef();
 
 export default function Noteitem({ note }) {
+  const isLarge = useMediaQuery("(min-width: 800px)");
   const [Notes, setNotes] = useContext(NoteContext);
   const [ShowEditPage, setShowEditPage] = useContext(ShowEditContext);
   const [CurrentEditNote, setCurrentEditNote] = useContext(EditNoteContext);
   const [GlobalValueContext, setGlobalValueContext] =
     useContext(GlobalNoteContext);
 
-  //TODO delete note function
   const EditNoteHandle = () => {
-    setShowEditPage((prev) => !prev);
+    if (isLarge) {
+      console.log("Large");
+    } else {
+      setShowEditPage((prev) => !prev);
+    }
   };
 
   const EditThisNote = (e) => {
-    const NoteId = e.target.dataset.id;
-    const EditThisNote = Notes.filter((note) => note.noteid === NoteId);
-    setCurrentEditNote(EditThisNote[0]);
-    setGlobalValueContext(EditThisNote[0]);
-    EditNoteHandle();
+    if (isLarge) {
+      console.log("Large");
+      const NoteId = e.target.dataset.id;
+      const EditThisNote = Notes.filter((note) => note.noteid === NoteId);
+      setCurrentEditNote(EditThisNote[0]);
+      setGlobalValueContext(EditThisNote[0]);
+    } else {
+      const NoteId = e.target.dataset.id;
+      const EditThisNote = Notes.filter((note) => note.noteid === NoteId);
+      setCurrentEditNote(EditThisNote[0]);
+      setGlobalValueContext(EditThisNote[0]);
+      EditNoteHandle();
+    }
   };
 
   const modules = {
