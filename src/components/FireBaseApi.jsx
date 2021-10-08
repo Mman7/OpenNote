@@ -167,8 +167,42 @@ export async function Delete_Note(noteid) {
     .then(() => console.log("Sucessfull Delete" + noteid))
     .catch((err) => console.log(err));
 }
-import { includes } from "lodash";
 
+import { includes } from "lodash";
 export function isThisNoteCreated(note) {
   return includes(note, note.noteid);
+}
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+
+export function SignInWithEmail(email, password) {
+  const auth = getAuth();
+  signInWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+      // Signed in
+      const user = userCredential.user;
+      // ...
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.log(error);
+    });
+}
+
+import { createUserWithEmailAndPassword } from "firebase/auth";
+
+export async function createAccountWithEmail(email, password) {
+  const auth = getAuth();
+  createUserWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+      // Signed in
+
+      const user = userCredential.user;
+      // ...
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      // ..
+    });
 }
