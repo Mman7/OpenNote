@@ -59,7 +59,11 @@ body {
         border-radius: 50%;
         margin: 1.5em;
       }
+      .default-avatar {
+        font-size: 600%;
+      }
     }
+
     h1 {
       margin: 0.25em;
       font-size: clamp(0.5rem, calc(0.5rem + 1.5vw), 1rem);
@@ -97,10 +101,8 @@ body {
   display: flex;
   justify-content: space-between;
   button {
+    @include prestyle-btn(none, none);
     font-size: 2rem;
-    background: transparent;
-    outline: none;
-    border: none;
     border-radius: 10px;
     color: white;
     padding: 0.25em;
@@ -132,9 +134,30 @@ body {
   grid-area: Preview-container;
   background: lightgreen;
   padding: 1em;
+
+  input {
+    outline: none;
+    border: none;
+    margin: 0.3em 0;
+    &:focus {
+      box-shadow: none;
+      border: none;
+    }
+  }
+  .title {
+    font-size: 1.5rem;
+    padding: 0.25em;
+  }
+  .date {
+    font-size: 1rem;
+    padding: 0.25em;
+  }
   .Preview-previewer {
+    flex: 1;
+    margin: 1em 0;
     * {
       border: none;
+      padding: 0;
     }
   }
   .preview-edit-btn {
@@ -392,11 +415,35 @@ body {
   height: 100vh;
   width: 100vw;
   z-index: 10;
+  .back-to-login-wrapper {
+    @include prestyle-btn(none, none);
+    display: flex;
+    margin-top: auto;
+    align-items: center;
+    font-size: 2rem;
+    color: gray;
+    h2 {
+      margin-top: 0.1rem;
+    }
+    .back-to-login {
+      margin: 0 0.25em 0 0;
+      font-size: 3rem;
+    }
+  }
+
+  .sign-in-page {
+    @extend .Login;
+    h1 {
+      font-weight: 700;
+    }
+  }
 }
 .Login {
   display: flex;
+  flex-direction: column;
   width: 75%;
   background: white;
+  height: 60%;
   .image {
     display: none;
     background: rgb(0, 0, 0);
@@ -411,7 +458,7 @@ body {
     background-repeat: no-repeat;
     background-size: cover;
     width: 100%;
-    height: 50vh;
+    height: 100%;
     padding: 3em;
     justify-content: center;
     p {
@@ -426,20 +473,27 @@ body {
     flex-direction: column;
     width: 100%;
     padding: 2em;
+    .form-label {
+      font-size: 1.2rem;
+      color: gray;
+      margin: 0;
+      padding: 0;
+    }
     .Provider-SignIn {
-      margin-top: auto;
+      margin-top: 2em;
       margin-bottom: auto;
       button {
         font-size: 1.5rem;
       }
     }
-    label {
-      font-size: 1rem;
+    .Login-text {
+      font-size: 2rem;
+      font-weight: 700;
     }
     input {
       border: none;
       margin: 0.5em 0;
-      border-radius: 10px;
+      // border-radius: 10px;
       outline: none;
       padding: 1em;
       box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
@@ -449,6 +503,17 @@ body {
       }
     }
   }
+  .sign-in-section {
+    h5 {
+      font-size: 1rem;
+      color: gray;
+    }
+    padding: 2.5em;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
 }
 
 @media (min-width: 800px) {
@@ -456,11 +521,14 @@ body {
     //Mobile First
     grid-template-columns: 45% 55%;
     .Preview-container {
-      display: grid;
+      display: flex;
+      flex-direction: column;
     }
   }
   .Landing-Page {
     .Login {
+      display: flex;
+      flex-direction: row;
       .image {
         display: flex;
       }
