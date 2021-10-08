@@ -25,7 +25,10 @@ export default function Previewcontainer() {
     setShowEditPage((prev) => !prev);
   };
 
-  const PreviewBtnShowHandler = () => (CurrentEditNote !== null ? "show" : "");
+  const PreviewBtnShowHandler = () =>
+    CurrentEditNote?.paragraph ? "show" : "";
+
+  console.log(CurrentEditNote);
 
   return (
     <div className="Preview-container">
