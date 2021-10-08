@@ -148,6 +148,7 @@ body {
     width: clamp(30%, 50%, 50%);
     transition: all 0.35s ease;
     &:focus {
+      box-shadow: none;
       width: 65%;
     }
   }
