@@ -12,7 +12,11 @@ export default function SideBar({ Sidebar, setisLogin }) {
     <div className={`Sidebar ${Sidebar ? "SideBarDisplay" : ""}`}>
       <div className="User-Info">
         <a>
-          <img src={getCurrentUser()?.photoURL} alt="User Img" />
+          {getCurrentUser()?.photoURL ? (
+            <img src={getCurrentUser()?.photoURL} alt="User Img" />
+          ) : (
+            <i className="fas fa-user-circle default-avatar"></i>
+          )}
         </a>
         <h1 className="user-display-name">{getCurrentUser()?.displayName}</h1>
         <h1 className="user-email">{getCurrentUser()?.email}</h1>
