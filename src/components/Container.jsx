@@ -1,6 +1,6 @@
 import SearchBar from "./SearchBar";
 import NoteList from "./NoteList";
-import Previewcontainer from "./Previewcontainer";
+import Previewcontainer from "./PreviewTab/Previewcontainer";
 
 import React, { useContext } from "react";
 
