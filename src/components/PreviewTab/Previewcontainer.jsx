@@ -5,6 +5,7 @@ import { NoteContext } from "../Context/NoteListContextProvider";
 import { EditNoteContext } from "../Context/EditNoteContextProvider";
 import Button from "react-bootstrap/Button";
 import { ShowEditContext } from "../OpenNote";
+import { NormalizeTime } from "../Logical-Javascript/NormalizeTime";
 
 export default function Previewcontainer() {
   const isLargeScreen = useMediaQuery("(min-width: 800px)");
@@ -28,10 +29,15 @@ export default function Previewcontainer() {
   const PreviewBtnShowHandler = () =>
     CurrentEditNote?.paragraph ? "show" : "";
 
-  console.log(CurrentEditNote);
-
   return (
     <div className="Preview-container">
+      <input defaultValue={PreviewValue?.title} className="title" type="text" />
+      <input
+        defaultValue={NormalizeTime(PreviewValue?.createdAt)}
+        className="date"
+        readOnly="readonly"
+        type="text"
+      />
       <ReactQuill
         className="Preview-previewer"
         theme="snow"
