@@ -5,6 +5,7 @@ import { GoogleSignIn } from "./FireBaseApi";
 import { isLoadingContext } from "./Context/LoadingContextProvider";
 import { SignInWithEmail } from "./FireBaseApi";
 import SignInPage from "./SignIn";
+import PopUp from "./PopUp";
 
 const EmailRef = createRef();
 const PasswordRef = createRef();
@@ -14,6 +15,7 @@ export default function LandingPage({ isLogin, setisLogin }) {
   const [ShowSignUpPage, setShowSignUpPage] = useState(false);
   const setisLoginState = setisLogin;
   isSignInChecker(setisLoginState);
+  const [Pop] = PopUp();
 
   const ShowSignUpPageHandler = () => {
     setShowSignUpPage((prev) => !prev);
@@ -28,11 +30,15 @@ export default function LandingPage({ isLogin, setisLogin }) {
     await GoogleSignIn(setisLoginState);
   };
 
-  const SignIn = (e) => {
-    e.preventDefault();
-    const email = EmailRef.current.value;
-    const password = PasswordRef.current.value;
-    SignInWithEmail(email, password);
+  const Login = async (e) => {
+    try {
+      e.preventDefault();
+      const email = EmailRef.current.value;
+      const password = PasswordRef.current.value;
+      const isSignIn = await SignInWithEmail(email, password);
+    } catch (err) {
+      Pop(err.code);
+    }
   };
 
   return (
@@ -63,7 +69,7 @@ export default function LandingPage({ isLogin, setisLogin }) {
                 placeholder="Password"
               />
             </Form.Group>
-            <Button onClick={(e) => SignIn(e)} variant="primary" type="submit">
+            <Button onClick={(e) => Login(e)} variant="primary" type="submit">
               Login
             </Button>
             <Form.Group className="Provider-SignIn">
