@@ -8,7 +8,6 @@ import { ShowEditContext } from "../OpenNote";
 import { NormalizeTime } from "../Logical-Javascript/NormalizeTime";
 
 export default function Previewcontainer() {
-  const isLargeScreen = useMediaQuery("(min-width: 800px)");
   const [ShowEditPage, setShowEditPage] = useContext(ShowEditContext);
   const [CurrentEditNote, setCurrentEditNote] = useContext(EditNoteContext);
   const [Notes, setNotes] = useContext(NoteContext);
