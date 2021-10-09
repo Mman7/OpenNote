@@ -105,7 +105,7 @@ body {
     font-size: 2rem;
     border-radius: 10px;
     color: white;
-    padding: 0.25em;
+    padding: 0.25em 0.5em;
     transform: scaleY(0.9);
     transition: all 0.25s ease;
     cursor: pointer;
@@ -214,6 +214,8 @@ body {
   }
 }
 .NoteList {
+  overflow: scroll;
+  scroll-behavior: smooth;
   grid-area: NoteList;
   background: lightgoldenrodyellow;
   width: 100%;
@@ -335,21 +337,24 @@ body {
 }
 .Loading {
   position: fixed;
+  top: 0;
   display: none;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  place-items: center;
+  width: 100vw;
+  height: 100vh;
   z-index: 100;
   padding: 10em 10em;
-  background: cornflowerblue;
+  background: hsla(0, 0%, 0%, 0.5);
+  z-index: 500000;
   .icon {
     font-size: 1000%;
     animation: rotate 1s ease infinite;
-    color: black;
+    color: white;
   }
 }
 .show {
-  display: block;
+  // display: grid;
+  display: none;
 }
 @keyframes rotate {
   0% {
@@ -516,7 +521,7 @@ body {
   }
 }
 
-@media (min-width: 800px) {
+@media (min-width: 768px) {
   .Container {
     //Mobile First
     grid-template-columns: 45% 55%;
