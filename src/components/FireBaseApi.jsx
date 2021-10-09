@@ -67,6 +67,7 @@ export function isSignInChecker(callback) {
   firebase.auth().onAuthStateChanged((user) => {
     if (user) {
       console.log("user is login");
+
       callback(true);
     } else {
       console.log("user not login");
@@ -99,7 +100,7 @@ export function newNote(note) {
         .doc(newUid)
         .set({
           noteid: newUid,
-          email: user.email,
+          email: user?.email,
           userId: user.uid,
           title: note.title ?? "New Document",
           createdAt: firebase.firestore.FieldValue.serverTimestamp(),
@@ -142,22 +143,31 @@ export function UpdateNote(note) {
 
 //TODO : Fix Firebase security rules
 //* ONLY USER THEMSELF CAN READS THE DATA
+import { onAuthStateChanged } from "firebase/auth";
+import { collection, query, where, getDocs, getDoc } from "firebase/firestore";
+import { isEmpty } from "lodash";
 
 export async function getData_From_DataBase() {
+  const auth = getAuth();
   const notelist = [];
-
-  const data = await new Promise((resolve) => {
-    db.collection("notes")
-      .get()
-      .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          notelist.push(doc.data());
-          resolve("Get Data Success");
-        });
+  return new Promise(
+    async (resolve, reject) =>
+      await onAuthStateChanged(auth, async (user) => {
+        if (user) {
+          const q = query(
+            collection(db, "notes"),
+            where("userId", "==", user.uid)
+          );
+          const querySnapshot = await getDocs(q);
+          const data = await querySnapshot.forEach(async (doc) => {
+            notelist.push(doc.data());
+          });
+        } else {
+          return;
+        }
+        resolve(notelist);
       })
-      .catch((err) => console.warn(err));
-  });
-  return notelist;
+  );
 }
 
 import { doc, deleteDoc } from "firebase/firestore";
@@ -174,35 +184,39 @@ export function isThisNoteCreated(note) {
 }
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
-export function SignInWithEmail(email, password) {
+export async function SignInWithEmail(email, password) {
   const auth = getAuth();
-  signInWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      // Signed in
-      const user = userCredential.user;
-      // ...
-    })
-    .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      console.log(error);
-    });
+  return new Promise((resolve, reject) =>
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        // Signed in
+        const user = userCredential.user;
+        // ...
+        resolve("user-signin");
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        reject(error);
+      })
+  );
 }
 
 import { createUserWithEmailAndPassword } from "firebase/auth";
 
 export async function createAccountWithEmail(email, password) {
   const auth = getAuth();
-  createUserWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      // Signed in
-
-      const user = userCredential.user;
-      // ...
-    })
-    .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      // ..
-    });
+  return new Promise((resolve, reject) =>
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        // Signed in
+        const user = userCredential.user;
+        resolve();
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        reject(error);
+      })
+  );
 }
