@@ -5,14 +5,13 @@ import Noteitem from "./Noteitem";
 export default function NoteList() {
   const [Notes, setNotes, , hadSearchBarValue] = useContext(NoteContext);
 
-  const searchBarValueHandler = () => (hadSearchBarValue !== "" ? true : false);
-
   // Notes.filter((note) => note.title.toLowerCase().includes(value))
   // noteitem base on search bar value
-  const ULT = () =>
-    Notes.filter((note) =>
+
+  const Note = () =>
+    Notes?.filter((note) =>
       note.title.toLowerCase().includes(hadSearchBarValue)
     ).map((note) => <Noteitem key={note.noteid} note={note} />);
 
-  return <div className="NoteList">{ULT()}</div>;
+  return <div className="NoteList">{Note()}</div>;
 }
