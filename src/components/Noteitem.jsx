@@ -10,7 +10,7 @@ import useMediaQuery from "./PreviewTab/MediaQuery";
 let mainRef = createRef();
 
 export default function Noteitem({ note }) {
-  const isLarge = useMediaQuery("(min-width: 800px)");
+  const isLarge = useMediaQuery("(min-width: 750px)");
   const [Notes, setNotes] = useContext(NoteContext);
   const [ShowEditPage, setShowEditPage] = useContext(ShowEditContext);
   const [CurrentEditNote, setCurrentEditNote] = useContext(EditNoteContext);
@@ -27,7 +27,6 @@ export default function Noteitem({ note }) {
 
   const EditThisNote = (e) => {
     if (isLarge) {
-      console.log("Large");
       const NoteId = e.target.dataset.id;
       const EditThisNote = Notes.filter((note) => note.noteid === NoteId);
       setCurrentEditNote(EditThisNote[0]);
