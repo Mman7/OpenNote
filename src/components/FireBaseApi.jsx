@@ -141,8 +141,6 @@ export function UpdateNote(note) {
   });
 }
 
-//TODO : Fix Firebase security rules
-//* ONLY USER THEMSELF CAN READS THE DATA
 import { onAuthStateChanged } from "firebase/auth";
 import { collection, query, where, getDocs, getDoc } from "firebase/firestore";
 import { isEmpty } from "lodash";
