@@ -8,7 +8,7 @@ import "firebase/compat/firestore";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCWl08_UZcgYk_pXc3cFump79S5qPPLLF8",
-  authDomain: "opennote-908da.firebaseapp.com",
+  authDomain: "opennote.webapp.com",
   projectId: "opennote-908da",
   storageBucket: "opennote-908da.appspot.com",
   messagingSenderId: "183178810366",
