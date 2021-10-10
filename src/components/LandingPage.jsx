@@ -20,9 +20,6 @@ export default function LandingPage({ isLogin, setisLogin }) {
   const ShowSignUpPageHandler = () => {
     setShowSignUpPage((prev) => !prev);
   };
-  //FIXME if account is not exist , then show up
-  //FIXME if account is existed , then show up
-  //*DOC* https://sweetalert2.github.io/#download */
 
   const LoginHandle = async (e) => {
     e.preventDefault();
@@ -50,7 +47,7 @@ export default function LandingPage({ isLogin, setisLogin }) {
           <div className="image">
             <p>Welcome to OpenNote</p>
           </div>
-          <Form>
+          <Form className="Login-form">
             <h1 className="Login-text">Login</h1>
             <Form.Group className="mb-1" controlId="formBasicEmail">
               <Form.Label className="form-label">Email address</Form.Label>

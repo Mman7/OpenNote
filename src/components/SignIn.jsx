@@ -24,7 +24,7 @@ export default function SignInPage({ ShowSignUpPageHandler }) {
 
   return (
     <div className="sign-in-page">
-      <Form>
+      <Form className="Login-form">
         <h1>Sign Up</h1>
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label>Email address</Form.Label>

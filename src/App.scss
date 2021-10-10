@@ -1,3 +1,4 @@
+@charset "UTF-8";
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@600&family=Oswald&display=swap");
 
 :root {
@@ -423,7 +424,7 @@ body {
   .back-to-login-wrapper {
     @include prestyle-btn(none, none);
     display: flex;
-    margin-top: auto;
+    margin-top: 1em;
     align-items: center;
     font-size: 2rem;
     color: gray;
@@ -438,6 +439,7 @@ body {
 
   .sign-in-page {
     @extend .Login;
+
     h1 {
       font-weight: 700;
     }
@@ -448,9 +450,13 @@ body {
   flex-direction: column;
   width: 75%;
   background: white;
-  height: 60%;
+  .Login-form {
+    height: 100%;
+    flex: 1;
+  }
   .image {
     display: none;
+    flex: 1;
     background: rgb(0, 0, 0);
     background: linear-gradient(
         120deg,
@@ -463,7 +469,7 @@ body {
     background-repeat: no-repeat;
     background-size: cover;
     width: 100%;
-    height: 100%;
+    height: inherit;
     padding: 3em;
     justify-content: center;
     p {
@@ -513,7 +519,7 @@ body {
       font-size: 1rem;
       color: gray;
     }
-    padding: 2.5em;
+    padding-top: 2.5em;
     margin: auto;
     display: flex;
     flex-direction: column;
