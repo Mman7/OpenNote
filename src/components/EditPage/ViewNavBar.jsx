@@ -6,6 +6,7 @@ import { EditNoteContext } from "../Context/EditNoteContextProvider";
 import { SaveNote_To_DataBase, Delete_Note } from "../FireBaseApi";
 import { GlobalNoteContext } from "../Context/GlobalValueContext";
 import { Dropdown } from "react-bootstrap";
+import { PopCheck } from "../PopUp";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 export default function ViewNavBar() {
@@ -43,6 +44,7 @@ export default function ViewNavBar() {
     await setisDifferent(false);
     await setshowMenu(true);
     await UpdateList();
+    await PopCheck("Note Saved");
   };
 
   return (
