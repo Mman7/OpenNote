@@ -1,4 +1,5 @@
 @charset "UTF-8";
+@use "abstract/colors";
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@600&family=Oswald&display=swap");
 
 :root {
@@ -20,11 +21,17 @@ body {
   overflow: hidden;
   position: relative;
   font-size: 62.5%;
-  background: rgb(17, 44, 69);
+  // background: rgb(17, 44, 69);
+  // background: linear-gradient(
+  //   120deg,
+  //   rgba(17, 44, 69, 1) 0%,
+  //   rgba(73, 139, 201, 1) 100%
+  // );
+  background: rgb(9, 9, 121);
   background: linear-gradient(
-    120deg,
-    rgba(17, 44, 69, 1) 0%,
-    rgba(73, 139, 201, 1) 100%
+    90deg,
+    rgba(9, 9, 121, 1) 0%,
+    rgba(0, 212, 255, 1) 100%
   );
 }
 ::-webkit-scrollbar {
@@ -41,11 +48,11 @@ body {
   padding: 1em;
   z-index: 5;
   width: 60%;
-  max-width: 15rem;
+  max-width: 13.5rem;
   left: -150%;
   height: 92%;
   position: fixed;
-  background: lightsteelblue;
+  background: colors.$SecondaryThemeBackground;
   display: flex;
   flex-direction: column;
   transition: all ease 0.5s;
@@ -53,31 +60,40 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background: seagreen;
+    background: colors.$ThemeSecondaryColor;
     padding: 1em;
+    border-radius: 5px;
     a {
+      margin: auto;
       img {
+        position: relative;
         border-radius: 50%;
-        margin: 1.5em;
+        width: 100%;
+        border: 5px solid #5a5afa;
+        margin: 0.5em 0;
       }
+
       .default-avatar {
         font-size: 600%;
       }
     }
 
     h1 {
+      color: colors.$SecondaryThemeBackground;
       margin: 0.25em;
       font-size: clamp(0.5rem, calc(0.5rem + 1.5vw), 1rem);
     }
   }
   button {
     @include prestyle-btn(5px solid transparent, none);
-    margin: 1em;
-    font-size: clamp(1.5rem, calc(0.5rem + 2vw), 1.7rem);
+    font-size: calc(1.5rem + 10%);
     padding: 0 1em;
+    font-weight: 400;
     transition: all ease 0.35s;
     &:hover {
-      border-left: 5px solid blue;
+      background: colors.$ThemeSecondaryColor;
+      color: white;
+      border-radius: 5px;
     }
   }
   .hey {
@@ -95,18 +111,20 @@ body {
 .Navbar {
   z-index: 100;
   width: 100%;
-  background: black;
-  padding: 5px;
+  background: colors.$ThemeSecondaryColor;
+  padding: 3px;
   -webkit-box-shadow: 0px 9px 15px 8px rgba(0, 0, 0, 0.51);
   box-shadow: 0px 9px 15px 8px rgba(0, 0, 0, 0.51);
   display: flex;
   justify-content: space-between;
-  button {
+  button,
+  .navbar-btn {
     @include prestyle-btn(none, none);
-    font-size: 2rem;
+    font-size: 1.65rem;
     border-radius: 10px;
     color: white;
-    padding: 0.25em 0.5em;
+    padding: 0.15em 0.35em;
+    margin: 0.05em;
     transform: scaleY(0.9);
     transition: all 0.25s ease;
     cursor: pointer;
@@ -131,15 +149,17 @@ body {
 }
 .Preview-container {
   display: none;
+  // box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px inset;
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 3px 8px inset;
   position: relative;
   grid-area: Preview-container;
-  background: lightgreen;
-  padding: 1em;
+  background: colors.$SecondaryThemeBackground;
+  padding: 2em;
 
   input {
+    background-color: colors.$ThemeBackground;
     outline: none;
     border: none;
-    margin: 0.3em 0;
     &:focus {
       box-shadow: none;
       border: none;
@@ -147,15 +167,16 @@ body {
   }
   .title {
     font-size: 1.5rem;
-    padding: 0.25em;
+    font-weight: 600;
   }
   .date {
+    font-weight: 500;
+    color: grayscale(colors.$ThemeSecondaryColor);
     font-size: 1rem;
-    padding: 0.25em;
   }
   .Preview-previewer {
     flex: 1;
-    margin: 1em 0;
+    margin: 2.5em 0;
     * {
       border: none;
       padding: 0;
@@ -164,9 +185,9 @@ body {
   .preview-edit-btn {
     display: none;
     position: absolute;
-    bottom: 10%;
+    bottom: 13%;
     right: 3%;
-    font-size: 3rem;
+    font-size: 2rem;
     outline: none;
     border: none;
     padding: 0.5em 0.7em;
@@ -177,7 +198,7 @@ body {
   }
 }
 .Searchbar {
-  background: lightpink;
+  background: colors.$ThemeBackground;
   grid-area: Searchbar;
   display: flex;
   align-content: center;
@@ -186,7 +207,7 @@ body {
   height: 100%;
   padding: 1em;
   input {
-    font-size: 1.5rem;
+    font-size: 1.15rem;
     padding: 0.25em 0.5em;
     outline: none;
     width: clamp(30%, 50%, 50%);
@@ -203,12 +224,11 @@ body {
     outline: none;
     border: none;
     color: white;
-    margin: 0 0.5em;
+    margin: 0 0.5em 0 0;
   }
   button {
-    margin: 0 0.1em;
+    margin: 0 0.5em;
     cursor: pointer;
-    padding-top: 0.1em;
     svg:hover {
       color: #066bc9;
     }
@@ -218,19 +238,22 @@ body {
   overflow: scroll;
   scroll-behavior: smooth;
   grid-area: NoteList;
-  background: lightgoldenrodyellow;
+  background: colors.$ThemeBackground;
   width: 100%;
 }
 .Noteitem {
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   position: relative;
   padding: 2em;
   margin: 2em;
-  background: #066bc9;
   border-radius: 10px;
   cursor: pointer;
   overflow: hidden;
   transition: all 0.3s ease;
   height: 10rem;
+  * {
+    color: white !important;
+  }
   &:hover {
     filter: brightness(1.15);
   }
@@ -245,10 +268,12 @@ body {
     color: white;
     font-size: 1.5rem;
   }
+
   .Noteitem-paragraph {
     color: white;
     overflow: hidden;
     height: 4rem;
+
     * {
       border: none;
       padding: 0;
@@ -282,7 +307,7 @@ body {
     "Edit-Section Edit-Section";
 
   .Edit-Section {
-    background: lightyellow;
+    background: colors.$White;
     grid-area: Edit-Section;
   }
 }
@@ -290,16 +315,24 @@ body {
   right: 150%;
 }
 .ViewNavBar {
-  background: peru;
-  padding: 5px;
-  display: flex;
-  justify-content: space-between;
+  @extend .Navbar;
+  background: colors.$NavColor;
+  box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 7px;
   grid-area: ViewNavBar;
+  .show {
+    display: flex;
+  }
   .Save-Note-btn {
     display: none;
   }
   .Save-Note-btn-show {
     display: block;
+  }
+  #dropdown-basic,
+  button {
+    @extend .navbar-btn;
+    padding: 0.25em 0.5em;
+    box-shadow: none;
   }
   .menu-fist-item {
     display: flex;
@@ -321,19 +354,6 @@ body {
   .dropdown-menu {
     //something
     background: white;
-  }
-  button {
-    background: transparent;
-    padding: 0.25em 0.5em;
-    border: none;
-    font-size: 2rem;
-    color: white;
-    border-radius: 10px;
-    outline: none;
-    cursor: pointer;
-    &:hover {
-      background: rgba(255, 255, 255, 0.404);
-    }
   }
 }
 .Loading {
@@ -387,14 +407,19 @@ body {
   }
   .Edit-title {
     grid-area: Edit-title;
-    background: lightcoral;
-    padding: 0.5em;
+    background: colors.$White;
+    padding: 0.5em 0.5em 0em 0.5rem;
+    font-weight: 500;
+    font-size: 1.5rem;
   }
   .Edit-Date {
-    padding: 0.25em 0.5em;
+    font-size: 1.1rem;
+    color: darken(colors.$White, $amount: 40);
+    font-weight: 500;
+    padding: 0 0.5em 0 0.5rem;
     pointer-events: none;
     grid-area: Edit-Date;
-    background: lightseagreen;
+    background: colors.$White;
   }
   .quill {
     height: 100vh;
@@ -402,8 +427,9 @@ body {
   .Edit-Note-Section {
     grid-area: Edit-Note-Section;
     width: 100%;
-    background: mediumspringgreen;
+    background: colors.$White;
     font-size: 1.5rem;
+    margin: 1em 0em;
   }
 }
 
@@ -449,6 +475,7 @@ body {
   display: flex;
   flex-direction: column;
   width: 75%;
+  min-width: 300px;
   background: white;
   .Login-form {
     height: 100%;
