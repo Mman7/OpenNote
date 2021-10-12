@@ -3,14 +3,10 @@ import { Form, Button } from "react-bootstrap";
 import { createAccountWithEmail } from "./FireBaseApi";
 import PopUp from "./PopUp";
 
-import { getAuth } from "firebase/auth";
-
 const EmailRef = createRef();
 const PasswordRef = createRef();
 
 export default function SignInPage({ ShowSignUpPageHandler }) {
-  const [Pop] = PopUp();
-
   const createAccountHandler = async (e) => {
     try {
       e.preventDefault();
@@ -18,7 +14,7 @@ export default function SignInPage({ ShowSignUpPageHandler }) {
       const password = PasswordRef.current.value;
       const isSignUp = await createAccountWithEmail(email, password);
     } catch (err) {
-      Pop(err.code);
+      PopUp(err.code);
     }
   };
 

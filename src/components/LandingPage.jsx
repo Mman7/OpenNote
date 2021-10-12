@@ -15,7 +15,6 @@ export default function LandingPage({ isLogin, setisLogin }) {
   const [ShowSignUpPage, setShowSignUpPage] = useState(false);
   const setisLoginState = setisLogin;
   isSignInChecker(setisLoginState);
-  const [Pop] = PopUp();
 
   const ShowSignUpPageHandler = () => {
     setShowSignUpPage((prev) => !prev);
@@ -34,7 +33,7 @@ export default function LandingPage({ isLogin, setisLogin }) {
       const password = PasswordRef.current.value;
       const isSignIn = await SignInWithEmail(email, password);
     } catch (err) {
-      Pop(err.code);
+      PopUp(err.code);
     }
   };
 
