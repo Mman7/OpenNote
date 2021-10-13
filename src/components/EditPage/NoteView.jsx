@@ -64,7 +64,7 @@ export default function NoteView() {
         onChange={(e) => titleHandler(e)}
         className="Edit-title"
       ></input>
-      <input defaultValue={date} className="Edit-Date"></input>
+      <input readOnly={true} defaultValue={date} className="Edit-Date"></input>
       <TextEditor setParagraph={setParagraph} />
     </div>
   );
