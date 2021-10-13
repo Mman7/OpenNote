@@ -115,7 +115,7 @@ body {
 .Navbar {
   z-index: 100;
   width: 100%;
-  background: colors.$ThemeSecondaryColor;
+  background: darken(colors.$ThemeSecondaryColor, 3);
   padding: 3px;
   -webkit-box-shadow: 0px 9px 15px 8px rgba(0, 0, 0, 0.51);
   box-shadow: 0px 9px 15px 8px rgba(0, 0, 0, 0.51);
