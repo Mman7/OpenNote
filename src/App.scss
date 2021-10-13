@@ -27,12 +27,16 @@ body {
   //   rgba(17, 44, 69, 1) 0%,
   //   rgba(73, 139, 201, 1) 100%
   // );
-  background: rgb(9, 9, 121);
-  background: linear-gradient(
-    90deg,
-    rgba(9, 9, 121, 1) 0%,
-    rgba(0, 212, 255, 1) 100%
-  );
+  // background: rgb(9, 9, 121);
+  // background: linear-gradient(
+  //   90deg,
+  //   rgba(9, 9, 121, 1) 0%,
+  //   rgba(0, 212, 255, 1) 100%
+  // );
+  background-image: url(./Image_Source/Note.jpg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 ::-webkit-scrollbar {
   display: none;
@@ -242,7 +246,8 @@ body {
   width: 100%;
 }
 .Noteitem {
-  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  backdrop-filter: blur(10px);
+  box-shadow: rgba(0, 0, 0, 0.75) 0px 5px 17.5px;
   position: relative;
   padding: 2em;
   margin: 2em;
