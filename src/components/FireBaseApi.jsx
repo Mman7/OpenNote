@@ -8,34 +8,49 @@ import "firebase/compat/firestore";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCWl08_UZcgYk_pXc3cFump79S5qPPLLF8",
-  authDomain: "opennote.webapp.com",
+  authDomain: "opennote-908da.firebaseapp.com",
+  databaseURL: "https://opennote-908da-default-rtdb.firebaseio.com",
   projectId: "opennote-908da",
   storageBucket: "opennote-908da.appspot.com",
   messagingSenderId: "183178810366",
-  appId: "1:183178810366:web:ea9e2a5b95e8f74d8666af",
-  measurementId: "G-Q79CKY84BC",
+  appId: "1:183178810366:web:71c68429b158795d8666af",
+  measurementId: "G-JB6RED2WK3",
 };
 
 firebase.initializeApp(firebaseConfig);
 
-var googleProvider = new firebase.auth.GoogleAuthProvider();
-
-googleProvider.addScope("https://www.googleapis.com/auth/contacts.readonly");
-
-googleProvider.setCustomParameters({
-  login_hint: "user@example.com",
-});
+// googleProvider.addScope("https://www.googleapis.com/auth/contacts.readonly");
 
 firebase.auth().useDeviceLanguage();
 
 //GoogleSignIn
+import { signInWithRedirect, GoogleAuthProvider } from "firebase/auth";
+
 export function GoogleSignIn(changeState) {
-  firebase
-    .auth()
-    .signInWithRedirect(googleProvider)
-    .then((user) => {
-      changeState(true);
-      console.log(user);
+  const googleProvider = new GoogleAuthProvider();
+  googleProvider.setCustomParameters({
+    login_hint: "user@example.com",
+  });
+  const auth = getAuth();
+  signInWithRedirect(auth, googleProvider)
+    .then((result) => {
+      // This gives you a Google Access Token. You can use it to access the Google API.
+      const credential = GoogleAuthProvider.credentialFromResult(result);
+      const token = credential.accessToken;
+      // The signed-in user info.
+      const user = result.user;
+      changeState();
+      // ...
+    })
+    .catch((error) => {
+      // Handle Errors here.
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      // The email of the user's account used.
+      const email = error.email;
+      // The AuthCredential type that was used.
+      const credential = GoogleAuthProvider.credentialFromError(error);
+      // ...
     });
 }
 
@@ -143,7 +158,6 @@ export function UpdateNote(note) {
 
 import { onAuthStateChanged } from "firebase/auth";
 import { collection, query, where, getDocs, getDoc } from "firebase/firestore";
-import { isEmpty } from "lodash";
 
 export async function getData_From_DataBase() {
   const auth = getAuth();
