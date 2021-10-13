@@ -21,9 +21,8 @@ export default function SideBar({ Sidebar, setisLogin }) {
         <h1 className="user-display-name">{getCurrentUser()?.displayName}</h1>
         <h1 className="user-email">{getCurrentUser()?.email}</h1>
       </div>
-      {/* <button className="hey">hey2</button>
-      <button>hey3</button>
-      <button>hey4</button> */}
+      {/* <button className="hey">build</button> */}
+      <h2 className="hey">App v1.03</h2>
       <button className="SignOut" onClick={SignOutHandle}>
         SignOut
       </button>

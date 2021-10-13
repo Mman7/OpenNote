@@ -46,8 +46,12 @@ body {
   position: fixed;
   background: colors.$SecondaryThemeBackground;
   display: flex;
+  justify-content: center;
   flex-direction: column;
   transition: all ease 0.5s;
+  h2 {
+    margin: 0.5em auto;
+  }
   .User-Info {
     display: flex;
     flex-direction: column;
@@ -87,9 +91,6 @@ body {
       color: white;
       border-radius: 5px;
     }
-  }
-  .hey {
-    margin-top: auto;
   }
   button:last-child {
     margin-top: auto;
@@ -233,7 +234,7 @@ body {
   width: 100%;
 }
 .Noteitem {
-  background-color: hsla(0, 0%, 0%, 0.375);
+  background-color: hsla(0, 0%, 0%, 0.45);
   backdrop-filter: blur(10px);
   box-shadow: rgba(0, 0, 0, 0.8) 0px 5px 17px;
   padding: 1.75em;
