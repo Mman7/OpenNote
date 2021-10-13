@@ -21,19 +21,7 @@ body {
   overflow: hidden;
   position: relative;
   font-size: 62.5%;
-  // background: rgb(17, 44, 69);
-  // background: linear-gradient(
-  //   120deg,
-  //   rgba(17, 44, 69, 1) 0%,
-  //   rgba(73, 139, 201, 1) 100%
-  // );
-  // background: rgb(9, 9, 121);
-  // background: linear-gradient(
-  //   90deg,
-  //   rgba(9, 9, 121, 1) 0%,
-  //   rgba(0, 212, 255, 1) 100%
-  // );
-  background-image: url(./Image_Source/Note.jpg);
+  background: url(./Image_Source/Note.jpg);
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -153,7 +141,6 @@ body {
 }
 .Preview-container {
   display: none;
-  // box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px inset;
   box-shadow: rgba(0, 0, 0, 0.4) 0px 3px 8px inset;
   position: relative;
   grid-area: Preview-container;
@@ -246,9 +233,9 @@ body {
   width: 100%;
 }
 .Noteitem {
+  background-color: hsla(0, 0%, 0%, 0.2);
   backdrop-filter: blur(10px);
-  box-shadow: rgba(0, 0, 0, 0.75) 0px 5px 17.5px;
-  position: relative;
+  box-shadow: rgba(0, 0, 0, 0.8) 0px 5px 17px;
   padding: 2em;
   margin: 2em;
   border-radius: 10px;
@@ -256,9 +243,6 @@ body {
   overflow: hidden;
   transition: all 0.3s ease;
   height: 10rem;
-  * {
-    color: white !important;
-  }
   &:hover {
     filter: brightness(1.15);
   }
@@ -267,29 +251,34 @@ body {
   .Noteitem-title,
   .Noteitem-time {
     pointer-events: none;
+    color: colors.$White;
   }
 
   .Noteitem-title {
-    color: white;
-    font-size: 1.5rem;
+    font-size: 1.45rem;
+    font-weight: 600;
   }
-
+  .Noteitem-time {
+    color: darken(colors.$White, 25);
+    margin: 0 0 0.5em 0;
+    font-size: 1rem;
+    flex: 0.25;
+  }
   .Noteitem-paragraph {
-    color: white;
+    * {
+      color: colors.$White !important;
+    }
+    display: block;
+    white-space: nowrap;
     overflow: hidden;
-    height: 4rem;
+    text-overflow: ellipsis;
+    height: 3.75rem;
 
     * {
       border: none;
       padding: 0;
       margin: 0;
     }
-  }
-  .Noteitem-time {
-    margin: 0 0 0.5em 0;
-    font-size: calc(1rem + 10%);
-    color: white;
-    flex: 0.25;
   }
 }
 .View {
