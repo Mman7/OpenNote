@@ -1,10 +1,16 @@
 import firebase from "firebase/compat/app";
 import { v4 as uuidv4 } from "uuid";
-import "firebase/compat/auth";
-import "firebase/compat/firestore";
+// import "firebase/compat/auth";
+import { getFirestore } from "firebase/firestore";
+import { doc, deleteDoc } from "firebase/firestore";
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  onAuthStateChanged,
+} from "firebase/auth";
+import { collection, query, where, getDocs, getDoc } from "firebase/firestore";
 
 //*DOC*: https://firebase.google.com/docs/web/modular-upgrade#get_the_version_9_sdk
-//TODO : Get Firebase api with fetch
 
 const firebaseConfig = {
   apiKey: "AIzaSyCWl08_UZcgYk_pXc3cFump79S5qPPLLF8",
@@ -19,78 +25,72 @@ const firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 
-// googleProvider.addScope("https://www.googleapis.com/auth/contacts.readonly");
-
-firebase.auth().useDeviceLanguage();
-
 //GoogleSignIn
 import { signInWithRedirect, GoogleAuthProvider } from "firebase/auth";
 
-export function GoogleSignIn(changeState) {
+export function GoogleSignIn() {
   const googleProvider = new GoogleAuthProvider();
+
+  googleProvider.addScope("https://www.googleapis.com/auth/contacts.readonly");
+
   googleProvider.setCustomParameters({
     login_hint: "user@example.com",
   });
+
   const auth = getAuth();
-  signInWithRedirect(auth, googleProvider)
-    .then((result) => {
-      // This gives you a Google Access Token. You can use it to access the Google API.
-      const credential = GoogleAuthProvider.credentialFromResult(result);
-      const token = credential.accessToken;
-      // The signed-in user info.
-      const user = result.user;
-      changeState();
-      // ...
-    })
-    .catch((error) => {
-      // Handle Errors here.
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      // The email of the user's account used.
-      const email = error.email;
-      // The AuthCredential type that was used.
-      const credential = GoogleAuthProvider.credentialFromError(error);
-      // ...
-    });
-}
-
-export const getCurrentUser = () => {
-  const currentUser = firebase.auth().currentUser;
-  if (currentUser !== null) {
-    // The user's ID, unique to the Firebase project. Do NOT use
-    // this value to authenticate with your backend server, if
-    // you have one. Use User.getToken() instead.
-    return currentUser;
-  }
-};
-
-export function SignOut(callback) {
-  firebase
-    .auth()
-    .signOut()
-    .then(() => {
-      console.log("Sign-out successful");
-      //setIsLogin to false
-      callback(false);
-    })
-    .catch((error) => {
-      console.log(`An ${error} happened.`);
-    });
-}
-
-export function isSignInChecker(callback) {
-  firebase.auth().onAuthStateChanged((user) => {
-    if (user) {
-      console.log("user is login");
-
-      callback(true);
-    } else {
-      console.log("user not login");
-    }
+  return new Promise((resolve, reject) => {
+    signInWithRedirect(auth, googleProvider)
+      .then((result) => {
+        console.log("user signin with google");
+        resolve();
+      })
+      .catch((error) => {
+        reject(error);
+      });
   });
 }
 
-const db = firebase.firestore();
+export const getCurrentUser = () => {
+  const auth = getAuth();
+  const user = auth.currentUser;
+  if (user) {
+    return user;
+  } else if (user !== null) {
+    return user;
+  }
+};
+
+import { signOut } from "firebase/auth";
+
+export function SignOut(callback) {
+  const auth = getAuth();
+  return new Promise((resovle, reject) => {
+    signOut(auth)
+      .then(() => {
+        console.log("user sign out");
+        resovle();
+      })
+      .catch((error) => {
+        console.log(error);
+        reject();
+      });
+  });
+}
+
+export function isSignInChecker() {
+  const auth = getAuth();
+  return new Promise((resolve, reject) => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        resolve("user sign in");
+      } else {
+        reject("user is not sign in");
+      }
+    });
+  });
+}
+
+const db = getFirestore();
 
 export async function SaveNote_To_DataBase(note) {
   return new Promise((resolve, reject) => {
@@ -105,6 +105,7 @@ export async function SaveNote_To_DataBase(note) {
 }
 
 export function newNote(note) {
+  //* fix
   //* note param must include
   // title
   // paragraph
@@ -132,57 +133,45 @@ export function newNote(note) {
     });
   });
 }
+import { updateDoc, serverTimestamp } from "firebase/firestore";
+
 export function UpdateNote(note) {
   //* note paragraph include
   // title
   // paragraph
-  return new Promise((resolve, reject) => {
-    firebase.auth().onAuthStateChanged((user) => {
-      db.collection("notes")
-        .doc(note.noteid)
-        .update({
-          title: note.title,
-          createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-          paragraph: JSON.stringify(note.paragraph),
-        })
-        .then(() => {
-          console.log("Document successfully Updated!");
-          resolve();
-        })
-        .catch((error) => {
-          console.error("Error writing document: ", error);
-        });
-    });
+  return new Promise(async (resolve, reject) => {
+    const notesRef = doc(db, "notes", note.noteid);
+    try {
+      await updateDoc(notesRef, {
+        title: note.title,
+        createdAt: serverTimestamp(),
+        paragraph: JSON.stringify(note.paragraph),
+      });
+      console.log("Document successfully Updated!");
+      resolve();
+    } catch (error) {
+      console.error("Error writing document: ", error);
+    }
   });
 }
 
-import { onAuthStateChanged } from "firebase/auth";
-import { collection, query, where, getDocs, getDoc } from "firebase/firestore";
-
+//*DOC*: https://firebase.google.com/docs/firestore/query-data/get-data *
 export async function getData_From_DataBase() {
   const auth = getAuth();
   const notelist = [];
-  return new Promise(
-    async (resolve, reject) =>
-      await onAuthStateChanged(auth, async (user) => {
-        if (user) {
-          const q = query(
-            collection(db, "notes"),
-            where("userId", "==", user.uid)
-          );
-          const querySnapshot = await getDocs(q);
-          const data = await querySnapshot.forEach(async (doc) => {
-            notelist.push(doc.data());
-          });
-        } else {
-          return;
-        }
-        resolve(notelist);
-      })
-  );
+  if (getCurrentUser() === null || undefined) return;
+  return new Promise(async (resolve, reject) => {
+    const q = query(
+      collection(db, "notes"),
+      where("userId", "==", getCurrentUser().uid)
+    );
+    const querySnapshot = await getDocs(q);
+    await querySnapshot.forEach((doc) => {
+      notelist.push(doc.data());
+    });
+    resolve(notelist);
+  });
 }
-
-import { doc, deleteDoc } from "firebase/firestore";
 
 export async function Delete_Note(noteid) {
   await deleteDoc(doc(db, "notes", noteid))
@@ -190,25 +179,21 @@ export async function Delete_Note(noteid) {
     .catch((err) => console.log(err));
 }
 
-import { includes } from "lodash";
+import { includes, indexOf } from "lodash";
+
 export function isThisNoteCreated(note) {
   return includes(note, note.noteid);
 }
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
 export async function SignInWithEmail(email, password) {
   const auth = getAuth();
   return new Promise((resolve, reject) =>
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        // Signed in
         const user = userCredential.user;
-        // ...
         resolve("user-signin");
       })
       .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
         reject(error);
       })
   );
