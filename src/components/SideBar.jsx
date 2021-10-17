@@ -1,8 +1,7 @@
 import React from "react";
-
 import { SignOut, getCurrentUser } from "./FireBaseApi";
 
-export default function SideBar({ Sidebar, setisLogin }) {
+export default function SideBar({ Sidebar, setisLogin, closeSidebar }) {
   const SignOutHandle = () => {
     const isLoginState = setisLogin;
     SignOut(isLoginState);
@@ -10,6 +9,11 @@ export default function SideBar({ Sidebar, setisLogin }) {
 
   return (
     <div className={`Sidebar ${Sidebar ? "SideBarDisplay" : ""}`}>
+      <div className="Close-btn-wrapper">
+        <button onClick={closeSidebar}>
+          <i className="fas fa-chevron-left"></i>
+        </button>
+      </div>
       <div className="User-Info">
         <a>
           {getCurrentUser()?.photoURL ? (

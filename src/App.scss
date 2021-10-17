@@ -37,18 +37,32 @@ body {
   display: none;
 }
 .Sidebar {
-  padding: 1em;
+  box-shadow: 0 0 0 10000px rgba(0, 0, 0, 0.5);
+  opacity: 0;
   z-index: 5;
   width: 60%;
   max-width: 13.5rem;
+  top: 0;
   left: -150%;
-  height: 92%;
+  bottom: 0;
   position: fixed;
   background: colors.$SecondaryThemeBackground;
+  background: white;
   display: flex;
   justify-content: center;
   flex-direction: column;
   transition: all ease 0.5s;
+  .Close-btn-wrapper {
+    padding: 0.45em 0;
+    background: colors.$ThemeSecondaryColor;
+
+    button {
+      color: white;
+      font-size: 1.5rem;
+      padding: 0.05em 0.35em;
+      margin: 0;
+    }
+  }
   h2 {
     margin: 0.5em auto;
   }
@@ -56,9 +70,10 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background: colors.$ThemeSecondaryColor;
+    background: lighten(colors.$ThemeSecondaryColor, 0);
+    margin: 1em;
+    border-radius: 10px;
     padding: 1em;
-    border-radius: 5px;
     a {
       margin: auto;
       img {
@@ -81,6 +96,7 @@ body {
     }
   }
   button {
+    margin: 0.5em 1em;
     @include prestyle-btn(5px solid transparent, none);
     font-size: calc(1.5rem + 10%);
     padding: 0 1em;
@@ -99,6 +115,7 @@ body {
 
 .SideBarDisplay {
   left: 0;
+  opacity: 1;
 }
 
 .Navbar {

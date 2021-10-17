@@ -16,6 +16,9 @@ export const ShowEditContext = createContext();
 export default function OpenNote({ setisLogin }) {
   const [Sidebar, setSidebar] = useState(false);
   const [Edit, setShowEdit] = useState(false);
+  const closeSidebar = () => {
+    setSidebar((prev) => !prev);
+  };
 
   return (
     <div className="App">
@@ -25,7 +28,11 @@ export default function OpenNote({ setisLogin }) {
             <NoteListContextProvider>
               <ShowEditContext.Provider value={[Edit, setShowEdit, setSidebar]}>
                 <NavBar setSidebar={setSidebar} />
-                <SideBar Sidebar={Sidebar} setisLogin={setisLogin} />
+                <SideBar
+                  Sidebar={Sidebar}
+                  setisLogin={setisLogin}
+                  closeSidebar={closeSidebar}
+                />
                 <Container Sidebar={Sidebar} />
                 <View />
               </ShowEditContext.Provider>
