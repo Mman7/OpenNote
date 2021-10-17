@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { Suspense, useState, lazy } from "react";
+const LandingPage = lazy(() => import("./components/LandingPage"));
+// import LandingPage from "./components/LandingPage";
+const OpenNote = lazy(() => import("./components/OpenNote"));
+// import OpenNote from "./components/OpenNote";
 
-import LandingPage from "./components/LandingPage";
-import OpenNote from "./components/OpenNote";
 import { GoogleSignIn } from "./components/FireBaseApi";
 import { IsLoadingContextProvider } from "./components/Context/LoadingContextProvider";
 
@@ -18,9 +20,13 @@ function App() {
   return (
     <IsLoadingContextProvider>
       {isLogin ? (
-        <OpenNote setisLogin={setisLogin} isLogin={isLogin} />
+        <Suspense fallback={<div>Loading...</div>}>
+          <OpenNote setisLogin={setisLogin} isLogin={isLogin} />
+        </Suspense>
       ) : (
-        <LandingPage setisLogin={setisLogin} isLogin={isLogin} />
+        <Suspense fallback={<div>Loading...</div>}>
+          <LandingPage setisLogin={setisLogin} isLogin={isLogin} />
+        </Suspense>
       )}
     </IsLoadingContextProvider>
   );

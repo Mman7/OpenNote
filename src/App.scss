@@ -186,6 +186,9 @@ body {
   .Preview-previewer {
     flex: 1;
     margin: 2.5em 0;
+    .ql-container {
+      border: none;
+    }
     * {
       border: none;
       padding: 0;
@@ -283,6 +286,9 @@ body {
     flex: 0.25;
   }
   .Noteitem-paragraph {
+    * {
+      border: none !important;
+    }
     * {
       color: colors.$White !important;
     }
@@ -401,8 +407,10 @@ body {
 .Edit-NoteView {
   grid-area: Edit-NoteView;
 
-  .ql-editor {
-    border: 0px solid white;
+  .ql-editor,
+  .ql-container,
+  .ql-snow {
+    border: none !important;
   }
   textarea {
     outline: none;

@@ -2,6 +2,7 @@ import React, { useState, createRef, useEffect, useContext } from "react";
 import { GlobalNoteContext } from "../Context/GlobalValueContext";
 import ReactQuill from "react-quill";
 import { EditNoteContext } from "../Context/EditNoteContextProvider";
+
 import "react-quill/dist/quill.snow.css";
 
 let mainRef = createRef();

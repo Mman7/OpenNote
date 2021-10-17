@@ -1,11 +1,15 @@
 import React, { useContext, useState, createRef } from "react";
-import { isSignInChecker } from "./FireBaseApi";
+
+import { isSignInChecker, SignInWithEmail, GoogleSignIn } from "./FireBaseApi";
+
 import { Form, Button } from "react-bootstrap";
-import { GoogleSignIn } from "./FireBaseApi";
+
 import { isLoadingContext } from "./Context/LoadingContextProvider";
-import { SignInWithEmail } from "./FireBaseApi";
+
 import SignInPage from "./SignIn";
 import PopUp from "./PopUp";
+
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const EmailRef = createRef();
 const PasswordRef = createRef();
