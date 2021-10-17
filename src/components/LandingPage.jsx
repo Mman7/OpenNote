@@ -17,8 +17,15 @@ const PasswordRef = createRef();
 export default function LandingPage({ isLogin, setisLogin }) {
   const [isLoading, ChangeIsLoading] = useContext(isLoadingContext);
   const [ShowSignUpPage, setShowSignUpPage] = useState(false);
-  const setisLoginState = setisLogin;
-  isSignInChecker(setisLoginState);
+
+  const isSignInCheckerHandler = async () => {
+    isSignInChecker(setisLogin)
+      .then(() => setisLogin(true))
+      .catch((err) => console.log(err));
+  };
+
+  //intial signin
+  isSignInCheckerHandler();
 
   const ShowSignUpPageHandler = () => {
     setShowSignUpPage((prev) => !prev);
@@ -27,7 +34,7 @@ export default function LandingPage({ isLogin, setisLogin }) {
   const LoginHandle = async (e) => {
     e.preventDefault();
     ChangeIsLoading();
-    await GoogleSignIn(setisLoginState);
+    await GoogleSignIn();
   };
 
   const Login = async (e) => {

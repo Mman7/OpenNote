@@ -3,10 +3,11 @@ import { SignOut, getCurrentUser } from "./FireBaseApi";
 
 export default function SideBar({ Sidebar, setisLogin, closeSidebar }) {
   const SignOutHandle = () => {
-    const isLoginState = setisLogin;
-    SignOut(isLoginState);
+    SignOut()
+      .then(() => setisLogin(false))
+      .catch((err) => console.log(err));
   };
-
+  //*FIXME: fix user info styles
   return (
     <div className={`Sidebar ${Sidebar ? "SideBarDisplay" : ""}`}>
       <div className="Close-btn-wrapper">
